@@ -1,5 +1,7 @@
 package com.khlebtsov.kalories;
 
+import com.khlebtsov.kalories.dto.AddMealRequest;
+import com.khlebtsov.kalories.dto.MealDto;
 import com.khlebtsov.kalories.entity.Meal;
 import org.junit.Assert;
 import org.junit.Before;
@@ -136,4 +138,28 @@ public class KaloriesApplicationTests {
         Assert.assertNotNull(meals);
         Assert.assertEquals(2, meals.length);
     }
+
+    @Test
+    public void addMeal() throws Exception {
+
+        AddMealRequest request = new AddMealRequest();
+
+        MealDto meal = new MealDto();
+        meal.setText("new meal");
+        meal.setNumberOfCalories(100);
+
+        request.setMeal(meal);
+
+
+        MockHttpServletRequestBuilder builder =
+                MockMvcRequestBuilders.post(URL_MEALS)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(JsonUtil.toJson(request));
+
+        ResultActions resultActions = this.mockMvc.perform(builder);
+        MvcResult mvcResult = resultActions.andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+        String contentAsString = response.getContentAsString();
+    }
+
 }

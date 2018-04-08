@@ -1,14 +1,13 @@
 package com.khlebtsov.kalories;
 
 
+import com.khlebtsov.kalories.dto.AddMealRequest;
 import com.khlebtsov.kalories.entity.Meal;
+import com.khlebtsov.kalories.mapper.DtoModelMapper;
 import com.khlebtsov.kalories.service.MealService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -19,10 +18,12 @@ import java.util.List;
 public class MealController {
 
     private final MealService mealService;
+    private final DtoModelMapper dtoModelMapper;
 
     @Autowired
-    public MealController(MealService mealService) {
+    public MealController(MealService mealService, DtoModelMapper dtoModelMapper) {
         this.mealService = mealService;
+        this.dtoModelMapper = dtoModelMapper;
     }
 
     @RequestMapping(value = "go", method = RequestMethod.GET)
@@ -58,6 +59,12 @@ public class MealController {
 
 
         return meals;
+    }
+
+    @RequestMapping(value = "meals", method = RequestMethod.POST)
+    public Meal meals(@RequestBody AddMealRequest request) {
+        Meal mealToAdd = dtoModelMapper.apply(request.getMeal());
+        return mealService.addMeal(mealToAdd);
     }
 
 }
