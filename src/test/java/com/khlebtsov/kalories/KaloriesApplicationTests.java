@@ -38,7 +38,7 @@ public class KaloriesApplicationTests {
     @Test
     public void contextLoads() throws Exception {
 
-
+//http://localhost:8080/meals?from=2018-04-08&to=2018-04-08
         MockHttpServletRequestBuilder builder =
                 MockMvcRequestBuilders.get(URL_GO)
                         .contentType(MediaType.APPLICATION_JSON);

@@ -4,12 +4,16 @@ package com.khlebtsov.kalories;
 import com.khlebtsov.kalories.entity.Meal;
 import com.khlebtsov.kalories.service.MealService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 public class MealController {
@@ -27,5 +31,27 @@ public class MealController {
         Collection<Meal> meals = mealService.getMeals(LocalDate.now().minusDays(1), LocalDate.now());
         return meals;
     }
+
+    @RequestMapping(value = "meals", method = RequestMethod.GET)
+    public List<Meal> meals(@RequestParam(required = false) String from, @RequestParam(required = false) String to) {
+
+        LocalDate fromLocalDate = !StringUtils.isEmpty(from) ? LocalDate.parse(from, DateTimeFormatter.ISO_DATE) : null;
+        LocalDate toLocalDate = !StringUtils.isEmpty(to) ? LocalDate.parse(to, DateTimeFormatter.ISO_DATE) : null;
+
+        List<Meal> meals;
+
+        if (fromLocalDate != null && toLocalDate != null) {
+            meals = mealService.getMeals(fromLocalDate, toLocalDate);
+        } else if (fromLocalDate != null) {
+            meals = mealService.getMeals(fromLocalDate);
+        } else if (toLocalDate != null) {
+            meals = mealService.getMeals(LocalDate.now(), toLocalDate);
+        } else {
+            meals = mealService.getMeals();
+        }
+
+        return meals;
+    }
+
 
 }
