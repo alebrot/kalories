@@ -25,8 +25,8 @@ public class MealService {
         return mealRepository.getMeals(Date.valueOf(from), Date.valueOf(to));
     }
 
-    public List<Meal> getMeals(LocalDate from) {
-        return mealRepository.getMeals(Date.valueOf(from));
+    public List<Meal> getMeals(LocalDate date) {
+        return mealRepository.getMeals(Date.valueOf(date));
     }
 
     public List<Meal> getMeals() {
