@@ -20,9 +20,12 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.util.UriBuilder;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -160,6 +163,20 @@ public class KaloriesApplicationTests {
         MvcResult mvcResult = resultActions.andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
         String contentAsString = response.getContentAsString();
+
     }
+
+    @Test
+    public void deleteMeal() throws Exception {
+
+        addMeal();
+
+        ResultActions resultActions = this.mockMvc.perform(delete(URL_MEALS + "/{id}", 3));
+        MvcResult mvcResult = resultActions.andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+        String contentAsString = response.getContentAsString();
+
+    }
+
 
 }

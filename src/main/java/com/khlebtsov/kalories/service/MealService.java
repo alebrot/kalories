@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -35,5 +36,18 @@ public class MealService {
 
     public Meal addMeal(Meal meal) {
         return mealRepository.save(meal);
+    }
+
+    public void deleteMeal(long id) {
+        mealRepository.deleteById(id);
+    }
+
+    public void deleteMeal(Meal meal) {
+        mealRepository.delete(meal);
+    }
+
+
+    public Optional<Meal> getMeal(long id) {
+        return mealRepository.findById(id);
     }
 }

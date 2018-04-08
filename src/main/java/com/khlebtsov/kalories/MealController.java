@@ -5,7 +5,9 @@ import com.khlebtsov.kalories.dto.AddMealRequest;
 import com.khlebtsov.kalories.entity.Meal;
 import com.khlebtsov.kalories.mapper.DtoModelMapper;
 import com.khlebtsov.kalories.service.MealService;
+import com.sun.javaws.exceptions.InvalidArgumentException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +15,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class MealController {
@@ -65,6 +68,18 @@ public class MealController {
     public Meal meals(@RequestBody AddMealRequest request) {
         Meal mealToAdd = dtoModelMapper.apply(request.getMeal());
         return mealService.addMeal(mealToAdd);
+    }
+
+    @Transactional
+    @RequestMapping(value = "meals/{id}", method = RequestMethod.DELETE)
+    public Meal meals(@PathVariable(name = "id") long id) {
+        Optional<Meal> meal = mealService.getMeal(id);
+        if (!meal.isPresent()) {
+            throw new IllegalArgumentException("Meal does'n exist");
+        }
+        Meal mealFound = meal.get();
+        mealService.deleteMeal(mealFound);
+        return mealFound;
     }
 
 }
