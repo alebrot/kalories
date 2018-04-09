@@ -5,13 +5,13 @@ import com.khlebtsov.kalories.dto.AddMealRequest;
 import com.khlebtsov.kalories.entity.Meal;
 import com.khlebtsov.kalories.mapper.DtoModelMapper;
 import com.khlebtsov.kalories.service.MealService;
-import com.sun.javaws.exceptions.InvalidArgumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.List;
@@ -32,7 +32,7 @@ public class MealController {
     @RequestMapping(value = "go", method = RequestMethod.GET)
     public Collection<Meal> go() {
 //        mealService.addMeal(new Meal());
-        Collection<Meal> meals = mealService.getMeals(LocalDate.now().minusDays(1), LocalDate.now());
+        Collection<Meal> meals = mealService.getMeals(LocalDateTime.now().minusDays(1), LocalDateTime.now());
         return meals;
     }
 
@@ -41,8 +41,8 @@ public class MealController {
                             @RequestParam(required = false) String to,
                             @RequestParam(required = false) String date) {
 
-        LocalDate fromLocalDate = !StringUtils.isEmpty(from) ? LocalDate.parse(from, DateTimeFormatter.ISO_DATE) : null;
-        LocalDate toLocalDate = !StringUtils.isEmpty(to) ? LocalDate.parse(to, DateTimeFormatter.ISO_DATE) : null;
+        LocalDateTime fromLocalDate = !StringUtils.isEmpty(from) ? LocalDateTime.parse(from, DateTimeFormatter.ISO_DATE_TIME) : null;
+        LocalDateTime toLocalDate = !StringUtils.isEmpty(to) ? LocalDateTime.parse(to, DateTimeFormatter.ISO_DATE_TIME) : null;
 
         List<Meal> meals;
 

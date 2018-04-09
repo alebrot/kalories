@@ -19,7 +19,7 @@ public interface MealRepository extends CrudRepository<Meal, Long> {
             @Param("from") @Temporal(TemporalType.TIMESTAMP) Date from,
             @Param("to") @Temporal(TemporalType.TIMESTAMP) Date to);
 
-    @Query(value = "SELECT * from MEAL where MEAL.DATE = :date", nativeQuery = true)
+    @Query(value = "SELECT * from MEAL where cast(MEAL.DATE as DATE) = :date", nativeQuery = true)
     List<Meal> getMeals(
-            @Param("date") @Temporal(TemporalType.TIMESTAMP) Date date);
+            @Param("date") @Temporal(TemporalType.DATE) Date date);
 }

@@ -20,9 +20,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.util.UriBuilder;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -66,8 +66,8 @@ public class KaloriesApplicationTests {
         MockHttpServletRequestBuilder builder =
                 MockMvcRequestBuilders.get(URL_MEALS)
                         .contentType(MediaType.APPLICATION_JSON);
-        builder.param("from", "2018-04-08");
-        builder.param("to", LocalDate.now().format(DateTimeFormatter.ISO_DATE));
+        builder.param("from", "2018-04-01T11:29:33.604");
+        builder.param("to", LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
 
         ResultActions resultActions = this.mockMvc.perform(builder);
         MvcResult mvcResult = resultActions.andReturn();
@@ -83,7 +83,7 @@ public class KaloriesApplicationTests {
         MockHttpServletRequestBuilder builder =
                 MockMvcRequestBuilders.get(URL_MEALS)
                         .contentType(MediaType.APPLICATION_JSON);
-        builder.param("from", "2018-04-08");
+        builder.param("from", "2018-04-01T11:29:33.604");
 
         ResultActions resultActions = this.mockMvc.perform(builder);
         MvcResult mvcResult = resultActions.andReturn();
@@ -99,7 +99,7 @@ public class KaloriesApplicationTests {
         MockHttpServletRequestBuilder builder =
                 MockMvcRequestBuilders.get(URL_MEALS)
                         .contentType(MediaType.APPLICATION_JSON);
-        builder.param("to", LocalDate.now().format(DateTimeFormatter.ISO_DATE));
+        builder.param("to", LocalDate.now().format(DateTimeFormatter.ISO_DATE_TIME));
 
         ResultActions resultActions = this.mockMvc.perform(builder);
         MvcResult mvcResult = resultActions.andReturn();
