@@ -2,12 +2,11 @@ package com.khlebtsov.kalories.entity;
 
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "meal")
-public class Meal {
+public class MealEntity {
 
     @Id()
     @Column(name = "id")

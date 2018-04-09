@@ -2,8 +2,7 @@ package com.khlebtsov.kalories;
 
 
 import com.khlebtsov.kalories.dto.AddMealRequest;
-import com.khlebtsov.kalories.entity.Meal;
-import com.khlebtsov.kalories.mapper.DtoModelMapper;
+import com.khlebtsov.kalories.mapper.MealDtoModelMapper;
 import com.khlebtsov.kalories.service.MealService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,65 +20,63 @@ import java.util.Optional;
 public class MealController {
 
     private final MealService mealService;
-    private final DtoModelMapper dtoModelMapper;
+    private final MealDtoModelMapper mealDtoModelMapper;
 
     @Autowired
-    public MealController(MealService mealService, DtoModelMapper dtoModelMapper) {
+    public MealController(MealService mealService, MealDtoModelMapper mealDtoModelMapper) {
         this.mealService = mealService;
-        this.dtoModelMapper = dtoModelMapper;
+        this.mealDtoModelMapper = mealDtoModelMapper;
     }
 
     @RequestMapping(value = "go", method = RequestMethod.GET)
-    public Collection<Meal> go() {
-//        mealService.addMeal(new Meal());
-        Collection<Meal> meals = mealService.getMeals(LocalDateTime.now().minusDays(1), LocalDateTime.now());
-        return meals;
+    public Collection<MealModel> go() {
+        return mealService.getMeals(LocalDateTime.now().minusDays(1), LocalDateTime.now());
     }
 
     @RequestMapping(value = "meals", method = RequestMethod.GET)
-    public List<Meal> meals(@RequestParam(required = false) String from,
-                            @RequestParam(required = false) String to,
-                            @RequestParam(required = false) String date) {
+    public List<MealModel> meals(@RequestParam(required = false) String from,
+                                  @RequestParam(required = false) String to,
+                                  @RequestParam(required = false) String date) {
 
         LocalDateTime fromLocalDate = !StringUtils.isEmpty(from) ? LocalDateTime.parse(from, DateTimeFormatter.ISO_DATE_TIME) : null;
         LocalDateTime toLocalDate = !StringUtils.isEmpty(to) ? LocalDateTime.parse(to, DateTimeFormatter.ISO_DATE_TIME) : null;
 
-        List<Meal> meals;
+        List<MealModel> mealEntities;
 
         if (date != null) {
             LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ISO_DATE);
-            meals = mealService.getMeals(localDate);
+            mealEntities = mealService.getMeals(localDate);
         } else {
             if (fromLocalDate != null && toLocalDate != null) {
                 if (toLocalDate.isBefore(fromLocalDate)) {
                     throw new IllegalArgumentException("Invalid request from < to");
                 }
-                meals = mealService.getMeals(fromLocalDate, toLocalDate);
+                mealEntities = mealService.getMeals(fromLocalDate, toLocalDate);
             } else {
-                meals = mealService.getMeals();
+                mealEntities = mealService.getMeals();
             }
         }
 
 
-        return meals;
+        return mealEntities;
     }
 
     @RequestMapping(value = "meals", method = RequestMethod.POST)
-    public Meal meals(@RequestBody AddMealRequest request) {
-        Meal mealToAdd = dtoModelMapper.apply(request.getMeal());
+    public MealModel meals(@RequestBody AddMealRequest request) {
+        MealModel mealToAdd = mealDtoModelMapper.map(request.getMeal());
         return mealService.addMeal(mealToAdd);
     }
 
     @Transactional
     @RequestMapping(value = "meals/{id}", method = RequestMethod.DELETE)
-    public Meal meals(@PathVariable(name = "id") long id) {
-        Optional<Meal> meal = mealService.getMeal(id);
+    public MealModel meals(@PathVariable(name = "id") long id) {
+        Optional<MealModel> meal = mealService.getMeal(id);
         if (!meal.isPresent()) {
-            throw new IllegalArgumentException("Meal does'n exist");
+            throw new IllegalArgumentException("MealEntity does'n exist");
         }
-        Meal mealFound = meal.get();
-        mealService.deleteMeal(mealFound);
-        return mealFound;
+        MealModel mealModel = meal.get();
+        mealService.deleteMeal(mealModel);
+        return mealModel;
     }
 
 }

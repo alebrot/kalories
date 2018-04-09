@@ -1,25 +1,36 @@
 package com.khlebtsov.kalories;
 
+
+import org.springframework.lang.Nullable;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class MealModel {
+    @Nullable
     private Long id;
-
     private String text;
-
     private LocalDate date;
-
+    @Nullable
     private LocalTime time;
 
     private int numberOfCalories;
 
-    public MealModel(Long id, String text, LocalDateTime timestamp, LocalTime time, int numberOfCalories) {
+
+    private MealModel() {
+    }
+
+    public MealModel(Long id, String text, LocalDateTime timestamp, int numberOfCalories) {
         this.id = id;
         this.text = text;
         this.date = timestamp.toLocalDate();
         this.time = timestamp.toLocalTime();
+        this.numberOfCalories = numberOfCalories;
+    }
+
+    public MealModel(String text, int numberOfCalories) {
+        this.text = text;
         this.numberOfCalories = numberOfCalories;
     }
 
@@ -41,5 +52,14 @@ public class MealModel {
 
     public int getNumberOfCalories() {
         return numberOfCalories;
+    }
+
+    @Nullable
+    public LocalDateTime getTimestamp() {
+        LocalDateTime localDateTime = null;
+        if (date != null && time != null) {
+            localDateTime = LocalDateTime.of(date, time);
+        }
+        return localDateTime;
     }
 }

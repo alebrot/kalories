@@ -1,6 +1,6 @@
 package com.khlebtsov.kalories;
 
-import com.khlebtsov.kalories.entity.Meal;
+import com.khlebtsov.kalories.entity.MealEntity;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.Temporal;
 import org.springframework.data.repository.CrudRepository;
@@ -12,14 +12,14 @@ import java.util.Date;
 import java.util.List;
 
 @Repository
-public interface MealRepository extends CrudRepository<Meal, Long> {
+public interface MealRepository extends CrudRepository<MealEntity, Long> {
 
     @Query(value = "SELECT * from MEAL where MEAL.DATE BETWEEN :from AND :to", nativeQuery = true)
-    List<Meal> getMeals(
+    List<MealEntity> getMeals(
             @Param("from") @Temporal(TemporalType.TIMESTAMP) Date from,
             @Param("to") @Temporal(TemporalType.TIMESTAMP) Date to);
 
     @Query(value = "SELECT * from MEAL where cast(MEAL.DATE as DATE) = :date", nativeQuery = true)
-    List<Meal> getMeals(
+    List<MealEntity> getMeals(
             @Param("date") @Temporal(TemporalType.DATE) Date date);
 }

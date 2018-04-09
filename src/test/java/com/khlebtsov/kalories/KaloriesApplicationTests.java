@@ -2,7 +2,7 @@ package com.khlebtsov.kalories;
 
 import com.khlebtsov.kalories.dto.AddMealRequest;
 import com.khlebtsov.kalories.dto.MealDto;
-import com.khlebtsov.kalories.entity.Meal;
+import com.khlebtsov.kalories.entity.MealEntity;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -57,7 +57,7 @@ public class KaloriesApplicationTests {
         MockHttpServletResponse response = mvcResult.getResponse();
         String contentAsString = response.getContentAsString();
 
-        Meal[] meals = JsonUtil.toObject(contentAsString, Meal[].class);
+        MealModel[] mealModels = JsonUtil.toObject(contentAsString, MealModel[].class);
     }
 
 
@@ -73,9 +73,9 @@ public class KaloriesApplicationTests {
         MvcResult mvcResult = resultActions.andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
         String contentAsString = response.getContentAsString();
-        Meal[] meals = JsonUtil.toObject(contentAsString, Meal[].class);
-        Assert.assertNotNull(meals);
-        Assert.assertEquals(2, meals.length);
+        MealModel[] mealModels = JsonUtil.toObject(contentAsString, MealModel[].class);
+        Assert.assertNotNull(mealModels);
+        Assert.assertEquals(2, mealModels.length);
     }
 
     @Test
@@ -89,9 +89,9 @@ public class KaloriesApplicationTests {
         MvcResult mvcResult = resultActions.andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
         String contentAsString = response.getContentAsString();
-        Meal[] meals = JsonUtil.toObject(contentAsString, Meal[].class);
-        Assert.assertNotNull(meals);
-        Assert.assertEquals(2, meals.length);
+        MealModel[] mealModels = JsonUtil.toObject(contentAsString, MealModel[].class);
+        Assert.assertNotNull(mealModels);
+        Assert.assertEquals(2, mealModels.length);
     }
 
     @Test
@@ -105,9 +105,9 @@ public class KaloriesApplicationTests {
         MvcResult mvcResult = resultActions.andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
         String contentAsString = response.getContentAsString();
-        Meal[] meals = JsonUtil.toObject(contentAsString, Meal[].class);
-        Assert.assertNotNull(meals);
-        Assert.assertEquals(2, meals.length);
+        MealModel[] mealModels = JsonUtil.toObject(contentAsString, MealModel[].class);
+        Assert.assertNotNull(mealModels);
+        Assert.assertEquals(2, mealModels.length);
     }
 
 
@@ -121,9 +121,9 @@ public class KaloriesApplicationTests {
         MvcResult mvcResult = resultActions.andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
         String contentAsString = response.getContentAsString();
-        Meal[] meals = JsonUtil.toObject(contentAsString, Meal[].class);
-        Assert.assertNotNull(meals);
-        Assert.assertEquals(2, meals.length);
+        MealEntity[] mealEntities = JsonUtil.toObject(contentAsString, MealEntity[].class);
+        Assert.assertNotNull(mealEntities);
+        Assert.assertEquals(2, mealEntities.length);
     }
 
     @Test
@@ -137,9 +137,9 @@ public class KaloriesApplicationTests {
         MvcResult mvcResult = resultActions.andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
         String contentAsString = response.getContentAsString();
-        Meal[] meals = JsonUtil.toObject(contentAsString, Meal[].class);
-        Assert.assertNotNull(meals);
-        Assert.assertEquals(2, meals.length);
+        MealModel[] mealModels = JsonUtil.toObject(contentAsString, MealModel[].class);
+        Assert.assertNotNull(mealModels);
+        Assert.assertEquals(2, mealModels.length);
     }
 
     @Test
