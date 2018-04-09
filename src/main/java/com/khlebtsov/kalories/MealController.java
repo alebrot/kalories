@@ -30,7 +30,7 @@ public class MealController {
 
     @RequestMapping(value = "go", method = RequestMethod.GET)
     public Collection<MealModel> go() {
-        return mealService.getMeals(LocalDateTime.now().minusDays(1), LocalDateTime.now());
+        return mealService.getMeals(LocalDate.now().minusDays(1), LocalDate.now());
     }
 
     @RequestMapping(value = "meals", method = RequestMethod.GET)
@@ -38,8 +38,8 @@ public class MealController {
                                   @RequestParam(required = false) String to,
                                   @RequestParam(required = false) String date) {
 
-        LocalDateTime fromLocalDate = !StringUtils.isEmpty(from) ? LocalDateTime.parse(from, DateTimeFormatter.ISO_DATE_TIME) : null;
-        LocalDateTime toLocalDate = !StringUtils.isEmpty(to) ? LocalDateTime.parse(to, DateTimeFormatter.ISO_DATE_TIME) : null;
+        LocalDate fromLocalDate = !StringUtils.isEmpty(from) ? LocalDate.parse(from, DateTimeFormatter.ISO_DATE) : null;
+        LocalDate toLocalDate = !StringUtils.isEmpty(to) ? LocalDate.parse(to, DateTimeFormatter.ISO_DATE) : null;
 
         List<MealModel> mealEntities;
 

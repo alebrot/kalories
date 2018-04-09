@@ -30,8 +30,7 @@ public class MealModel {
     }
 
     public MealModel(String text, int numberOfCalories) {
-        this.text = text;
-        this.numberOfCalories = numberOfCalories;
+        this(null, text, LocalDateTime.now(), numberOfCalories);
     }
 
     public Long getId() {

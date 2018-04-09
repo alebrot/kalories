@@ -14,10 +14,10 @@ import java.util.List;
 @Repository
 public interface MealRepository extends CrudRepository<MealEntity, Long> {
 
-    @Query(value = "SELECT * from MEAL where MEAL.DATE BETWEEN :from AND :to", nativeQuery = true)
+    @Query(value = "SELECT * from MEAL where cast(MEAL.DATE as DATE) BETWEEN :from AND :to", nativeQuery = true)
     List<MealEntity> getMeals(
-            @Param("from") @Temporal(TemporalType.TIMESTAMP) Date from,
-            @Param("to") @Temporal(TemporalType.TIMESTAMP) Date to);
+            @Param("from") @Temporal(TemporalType.DATE) Date from,
+            @Param("to") @Temporal(TemporalType.DATE) Date to);
 
     @Query(value = "SELECT * from MEAL where cast(MEAL.DATE as DATE) = :date", nativeQuery = true)
     List<MealEntity> getMeals(

@@ -8,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -29,8 +27,8 @@ public class MealService {
         this.mealModelEntityMapper = mealModelEntityMapper;
     }
 
-    public List<MealModel> getMeals(LocalDateTime from, LocalDateTime to) {
-        return mealRepository.getMeals(Timestamp.valueOf(from), Timestamp.valueOf(to)).stream()
+    public List<MealModel> getMeals(LocalDate from, LocalDate to) {
+        return mealRepository.getMeals(Date.valueOf(from), Date.valueOf(to)).stream()
                 .map(mealModelEntityMapper::mapBackward)
                 .collect(Collectors.toList());
     }
