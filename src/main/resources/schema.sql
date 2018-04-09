@@ -1,8 +1,8 @@
 
 CREATE TABLE IF NOT EXISTS MEAL
 (
-  ID                 int  AUTO_INCREMENT PRIMARY KEY,
-  TEXT               text,
-  DATE               DATE default NOW(),
-  NUMBER_OF_CALORIES int default 0 not null
+  ID                 INT  AUTO_INCREMENT PRIMARY KEY,
+  TEXT               TEXT,
+  DATE               TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  NUMBER_OF_CALORIES INT default 0 NOT NULL
 );

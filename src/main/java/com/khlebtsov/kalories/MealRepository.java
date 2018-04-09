@@ -16,10 +16,10 @@ public interface MealRepository extends CrudRepository<Meal, Long> {
 
     @Query(value = "SELECT * from MEAL where MEAL.DATE BETWEEN :from AND :to", nativeQuery = true)
     List<Meal> getMeals(
-            @Param("from") @Temporal(TemporalType.DATE) Date from,
-            @Param("to") @Temporal(TemporalType.DATE) Date to);
+            @Param("from") @Temporal(TemporalType.TIMESTAMP) Date from,
+            @Param("to") @Temporal(TemporalType.TIMESTAMP) Date to);
 
     @Query(value = "SELECT * from MEAL where MEAL.DATE = :date", nativeQuery = true)
     List<Meal> getMeals(
-            @Param("date") @Temporal(TemporalType.DATE) Date date);
+            @Param("date") @Temporal(TemporalType.TIMESTAMP) Date date);
 }

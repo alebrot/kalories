@@ -3,6 +3,7 @@ package com.khlebtsov.kalories.entity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "meal")
@@ -17,7 +18,7 @@ public class Meal {
     private String text;
 
     @Column(name = "date")
-    private LocalDate date;
+    private LocalDateTime timestamp;
 
     @Column(name = "number_of_calories")
     private int numberOfCalories;
@@ -46,11 +47,11 @@ public class Meal {
         this.numberOfCalories = numberOfCalories;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public LocalDateTime getDate() {
+        return timestamp;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setDate(LocalDateTime date) {
+        this.timestamp = date;
     }
 }

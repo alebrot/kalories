@@ -51,7 +51,7 @@ public class MealController {
             meals = mealService.getMeals(localDate);
         } else {
             if (fromLocalDate != null && toLocalDate != null) {
-                if (fromLocalDate.isBefore(toLocalDate)) {
+                if (toLocalDate.isBefore(fromLocalDate)) {
                     throw new IllegalArgumentException("Invalid request from < to");
                 }
                 meals = mealService.getMeals(fromLocalDate, toLocalDate);
