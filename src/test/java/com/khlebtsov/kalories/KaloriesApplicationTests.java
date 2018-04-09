@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -31,6 +32,7 @@ public class KaloriesApplicationTests {
 
     public static final String URL_GO = "/go";
     public static final String URL_MEALS = "/meals";
+    public static final String URL_CALORIES = "/calories/count";
 
     @Autowired
     protected WebApplicationContext webApplicationContext;
@@ -73,7 +75,7 @@ public class KaloriesApplicationTests {
         String contentAsString = response.getContentAsString();
         MealModel[] mealModels = JsonUtil.toObject(contentAsString, MealModel[].class);
         Assert.assertNotNull(mealModels);
-        Assert.assertTrue(mealModels.length!=0);
+        Assert.assertTrue(mealModels.length != 0);
     }
 
     @Test
@@ -89,7 +91,7 @@ public class KaloriesApplicationTests {
         String contentAsString = response.getContentAsString();
         MealModel[] mealModels = JsonUtil.toObject(contentAsString, MealModel[].class);
         Assert.assertNotNull(mealModels);
-        Assert.assertTrue(mealModels.length!=0);
+        Assert.assertTrue(mealModels.length != 0);
     }
 
     @Test
@@ -105,7 +107,7 @@ public class KaloriesApplicationTests {
         String contentAsString = response.getContentAsString();
         MealModel[] mealModels = JsonUtil.toObject(contentAsString, MealModel[].class);
         Assert.assertNotNull(mealModels);
-        Assert.assertTrue(mealModels.length!=0);
+        Assert.assertTrue(mealModels.length != 0);
     }
 
 
@@ -121,7 +123,7 @@ public class KaloriesApplicationTests {
         String contentAsString = response.getContentAsString();
         MealModel[] mealModels = JsonUtil.toObject(contentAsString, MealModel[].class);
         Assert.assertNotNull(mealModels);
-        Assert.assertTrue(mealModels.length!=0);
+        Assert.assertTrue(mealModels.length != 0);
     }
 
     @Test
@@ -137,7 +139,7 @@ public class KaloriesApplicationTests {
         String contentAsString = response.getContentAsString();
         MealModel[] mealModels = JsonUtil.toObject(contentAsString, MealModel[].class);
         Assert.assertNotNull(mealModels);
-        Assert.assertTrue(mealModels.length!=0);
+        Assert.assertTrue(mealModels.length != 0);
     }
 
     @Test
@@ -177,4 +179,20 @@ public class KaloriesApplicationTests {
     }
 
 
+    @Test
+    public void calories() throws Exception {
+
+        MockHttpServletRequestBuilder builder =
+                MockMvcRequestBuilders.get(URL_CALORIES)
+                        .contentType(MediaType.APPLICATION_JSON);
+        builder.param("date", "2018-04-08");
+
+        ResultActions resultActions = this.mockMvc.perform(builder);
+        MvcResult mvcResult = resultActions.andReturn();
+        MockHttpServletResponse response = mvcResult.getResponse();
+        String contentAsString = response.getContentAsString();
+        Integer mealModels = JsonUtil.toObject(contentAsString, Integer.class);
+        Assert.assertNotNull(mealModels);
+
+    }
 }
