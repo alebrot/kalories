@@ -1,8 +1,11 @@
 package com.khlebtsov.kalories;
 
 
+import com.khlebtsov.kalories.dto.CaloriesCountResponse;
+import com.khlebtsov.kalories.exception.KaloriesException;
 import com.khlebtsov.kalories.service.CaloriesFacade;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 @RestController
 public class CaloriesController {
@@ -24,32 +28,40 @@ public class CaloriesController {
     }
 
     @RequestMapping(value = "calories/count", method = RequestMethod.GET)
-    public int caloriesCount(
+    public CaloriesCountResponse caloriesCount(
             @RequestParam Long userId,
             @RequestParam(required = false) String from,
             @RequestParam(required = false) String to,
-            @RequestParam(required = false) String date) {
+            @RequestParam(required = false) String date) throws KaloriesException {
 
         LocalDate fromLocalDate = !StringUtils.isEmpty(from) ? LocalDate.parse(from, DateTimeFormatter.ISO_DATE) : null;
         LocalDate toLocalDate = !StringUtils.isEmpty(to) ? LocalDate.parse(to, DateTimeFormatter.ISO_DATE) : null;
 
-        int numberOfCalories;
-
+        Optional<Pair<Long, CaloriesFacade.CaloriesStatus>> calories;
         if (date != null) {
             LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ISO_DATE);
-            numberOfCalories = caloriesFacade.getCaloriesByUser(userId, localDate);
+            calories = caloriesFacade.getCaloriesByUser(userId, localDate);
         } else {
             if (fromLocalDate != null && toLocalDate != null) {
                 if (toLocalDate.isBefore(fromLocalDate)) {
                     throw new IllegalArgumentException(INVALID_REQUEST_FROM_TO);
                 }
-                numberOfCalories = caloriesFacade.getCaloriesByUser(userId, fromLocalDate, toLocalDate);
+                calories = caloriesFacade.getCaloriesByUser(userId, fromLocalDate, toLocalDate);
             } else {
-                numberOfCalories = caloriesFacade.getCaloriesByUser(userId);
+                calories = caloriesFacade.getCaloriesByUser(userId);
             }
         }
 
-        return numberOfCalories;
+        if (!calories.isPresent()) {
+            throw new KaloriesException("Not found");
+        }
+
+
+        CaloriesCountResponse caloriesCountResponse = new CaloriesCountResponse();
+        caloriesCountResponse.setCaloriesStatus(calories.get().getSecond());
+        caloriesCountResponse.setCaloriesCount(calories.get().getFirst());
+
+        return caloriesCountResponse;
     }
 
 

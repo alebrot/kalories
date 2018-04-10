@@ -1,7 +1,9 @@
 package com.khlebtsov.kalories;
 
 import com.khlebtsov.kalories.dto.AddMealRequest;
+import com.khlebtsov.kalories.dto.CaloriesCountResponse;
 import com.khlebtsov.kalories.dto.MealDto;
+import com.khlebtsov.kalories.entity.CaloriesPerUserEntity;
 import com.khlebtsov.kalories.entity.MealEntity;
 import com.khlebtsov.kalories.entity.UserMealEntity;
 import com.khlebtsov.kalories.service.MealService;
@@ -28,6 +30,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 
@@ -173,7 +176,7 @@ public class KaloriesApplicationTests {
 
 
     @Test
-    public void calories() throws Exception {
+    public void caloriesCount() throws Exception {
 
         MockHttpServletRequestBuilder builder =
                 MockMvcRequestBuilders.get(URL_CALORIES)
@@ -185,8 +188,8 @@ public class KaloriesApplicationTests {
         MvcResult mvcResult = resultActions.andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
         String contentAsString = response.getContentAsString();
-        Integer mealModels = JsonUtil.toObject(contentAsString, Integer.class);
-        Assert.assertNotNull(mealModels);
+        CaloriesCountResponse caloriesCountResponse = JsonUtil.toObject(contentAsString, CaloriesCountResponse.class);
+        Assert.assertNotNull(caloriesCountResponse);
 
     }
 
@@ -197,9 +200,14 @@ public class KaloriesApplicationTests {
     @Autowired
     private MealService mealService;
 
+    @Autowired
+    private CaloriesPerUserRepository caloriesPerUserRepository;
+
     @Test
     @Transactional
     public void repositoryTest() {
+
+        Optional<CaloriesPerUserEntity> byUserId = caloriesPerUserRepository.findByUserId(1L);
 
 //        List<MealModel> mealsByUser = mealService.getMealsByUser(1L);
 //        Assert.assertNotNull(mealsByUser);

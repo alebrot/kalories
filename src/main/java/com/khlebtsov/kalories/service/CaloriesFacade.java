@@ -2,35 +2,80 @@ package com.khlebtsov.kalories.service;
 
 import com.khlebtsov.kalories.MealModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
 @Component
 public class CaloriesFacade {
 
     private final MealService mealService;
+    private final CaloriesService caloriesService;
+
 
     @Autowired
-    public CaloriesFacade(MealService mealService) {
+    public CaloriesFacade(MealService mealService, CaloriesService caloriesService) {
         this.mealService = mealService;
+        this.caloriesService = caloriesService;
     }
 
-    public int getCaloriesByUser(Long userId, LocalDate from, LocalDate to) {
-        return mealService.getMealsByUser(userId, from, to).stream()
-                .mapToInt(MealModel::getNumberOfCalories)
-                .sum();
+    public Optional<Pair<Long, CaloriesStatus>> getCaloriesByUser(Long userId, LocalDate from, LocalDate to) {
+        Optional<Pair<Long, CaloriesStatus>> result = Optional.empty();
+        Optional<Long> caloriesForUser = caloriesService.getCaloriesForUser(userId);
+        if (caloriesForUser.isPresent()) {
+            Long threshold = caloriesForUser.get();
+            List<MealModel> mealsByUser = mealService.getMealsByUser(userId, from, to);
+            if (!mealsByUser.isEmpty()) {
+                long sum = mealsByUser.stream().mapToLong(MealModel::getNumberOfCalories).sum();
+                result = Optional.of(Pair.of(sum, determineCaloriesStatus(threshold, sum)));
+            }
+        }
+
+        return result;
+
     }
 
-    public int getCaloriesByUser(Long userId, LocalDate date) {
-        return mealService.getMealsByUser(userId, date).stream()
-                .mapToInt(MealModel::getNumberOfCalories)
-                .sum();
+    public Optional<Pair<Long, CaloriesStatus>> getCaloriesByUser(Long userId, LocalDate date) {
+        Optional<Pair<Long, CaloriesStatus>> result = Optional.empty();
+        Optional<Long> caloriesForUser = caloriesService.getCaloriesForUser(userId);
+        if (caloriesForUser.isPresent()) {
+            Long threshold = caloriesForUser.get();
+            List<MealModel> mealsByUser = mealService.getMealsByUser(userId, date);
+            if (!mealsByUser.isEmpty()) {
+                long sum = mealsByUser.stream().mapToLong(MealModel::getNumberOfCalories).sum();
+                result = Optional.of(Pair.of(sum, determineCaloriesStatus(threshold, sum)));
+            }
+        }
+
+        return result;
     }
 
-    public int getCaloriesByUser(Long userId) {
-        return mealService.getMealsByUser(userId).stream()
-                .mapToInt(MealModel::getNumberOfCalories)
-                .sum();
+    public Optional<Pair<Long, CaloriesStatus>> getCaloriesByUser(Long userId) {
+        Optional<Pair<Long, CaloriesStatus>> result = Optional.empty();
+        Optional<Long> caloriesForUser = caloriesService.getCaloriesForUser(userId);
+        if (caloriesForUser.isPresent()) {
+            Long threshold = caloriesForUser.get();
+            List<MealModel> mealsByUser = mealService.getMealsByUser(userId);
+            if (!mealsByUser.isEmpty()) {
+                long sum = mealsByUser.stream().mapToLong(MealModel::getNumberOfCalories).sum();
+                result = Optional.of(Pair.of(sum, determineCaloriesStatus(threshold, sum)));
+            }
+        }
+
+        return result;
     }
+
+    private CaloriesStatus determineCaloriesStatus(Long threshold, long sum) {
+        return sum <= threshold ? CaloriesStatus.OK : CaloriesStatus.WARNING_EXCEED_THRESHOLD;
+    }
+
+
+    public enum CaloriesStatus {
+        WARNING_EXCEED_THRESHOLD, OK
+    }
+
+
 }
