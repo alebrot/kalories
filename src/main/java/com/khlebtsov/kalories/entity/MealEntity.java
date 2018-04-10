@@ -16,11 +16,12 @@ public class MealEntity {
     @Column(name = "text")
     private String text;
 
+    @Deprecated
     @Column(name = "date")
     private LocalDateTime timestamp;
 
     @Column(name = "number_of_calories")
-    private int numberOfCalories;
+    private Long numberOfCalories;
 
     public Long getId() {
         return id;
@@ -38,18 +39,18 @@ public class MealEntity {
         this.text = text;
     }
 
-    public int getNumberOfCalories() {
+    public Long getNumberOfCalories() {
         return numberOfCalories;
     }
 
-    public void setNumberOfCalories(int numberOfCalories) {
+    public void setNumberOfCalories(Long numberOfCalories) {
         this.numberOfCalories = numberOfCalories;
     }
 
     public LocalDateTime getDate() {
         return timestamp;
     }
-
+    @Deprecated
     public void setDate(LocalDateTime date) {
         this.timestamp = date;
     }

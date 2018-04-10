@@ -1,7 +1,11 @@
 package com.khlebtsov.kalories.dto;
 
+import javax.validation.constraints.NotNull;
+
 public class SetCaloriesRequest {
+    @NotNull
     private Long calories;
+    @NotNull
     private Long userId;
 
     public Long getCalories() {

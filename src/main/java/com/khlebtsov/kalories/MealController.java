@@ -2,6 +2,7 @@ package com.khlebtsov.kalories;
 
 
 import com.khlebtsov.kalories.dto.AddMealRequest;
+import com.khlebtsov.kalories.exception.KaloriesException;
 import com.khlebtsov.kalories.mapper.MealDtoModelMapper;
 import com.khlebtsov.kalories.service.MealService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +29,6 @@ public class MealController {
         this.mealDtoModelMapper = mealDtoModelMapper;
     }
 
-    @RequestMapping(value = "go", method = RequestMethod.GET)
-    public Collection<MealModel> go() {
-        return mealService.getMeals(LocalDate.now().minusDays(1), LocalDate.now());
-    }
 
     @RequestMapping(value = "meals", method = RequestMethod.GET)
     public List<MealModel> meals(@RequestParam Long userId,
@@ -64,9 +61,18 @@ public class MealController {
     }
 
     @RequestMapping(value = "meals", method = RequestMethod.POST)
-    public MealModel meals(@RequestBody AddMealRequest request) {
+    public MealModel addMeals(@RequestBody AddMealRequest request) throws KaloriesException {
         MealModel mealToAdd = mealDtoModelMapper.map(request.getMeal());
-        return mealService.addMeal(mealToAdd);
+        Long userId = request.getUserId();
+        return mealService.createOrUpdateMealForUser(userId, mealToAdd);
+    }
+
+    @RequestMapping(value = "meals/{id}", method = RequestMethod.PATCH)
+    public MealModel updateMeal(@RequestBody AddMealRequest request, @PathVariable(name = "id") long id) throws KaloriesException {
+        MealModel mealToUpdate = mealDtoModelMapper.map(request.getMeal());
+        mealToUpdate.setId(id);
+        Long userId = request.getUserId();
+        return mealService.createOrUpdateMealForUser(userId, mealToUpdate);
     }
 
     @Transactional

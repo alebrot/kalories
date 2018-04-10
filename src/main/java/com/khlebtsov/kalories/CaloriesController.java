@@ -55,7 +55,7 @@ public class CaloriesController {
         }
 
         if (!calories.isPresent()) {
-            throw new KaloriesException("Not found");
+            throw new KaloriesException("Calories sum not found for userId " + userId);
         }
 
 
@@ -67,7 +67,7 @@ public class CaloriesController {
     }
 
     @RequestMapping(value = "calories", method = RequestMethod.POST)
-    public void meals(@RequestBody @Valid SetCaloriesRequest request) throws KaloriesException {
+    public void setCaloriesForUser(@RequestBody @Valid SetCaloriesRequest request) throws KaloriesException {
         Long calories = request.getCalories();
         Long userId = request.getUserId();
         caloriesService.setForUser(userId, calories);

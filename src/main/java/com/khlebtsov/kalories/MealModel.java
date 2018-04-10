@@ -15,13 +15,13 @@ public class MealModel {
     @Nullable
     private LocalTime time;
 
-    private int numberOfCalories;
+    private long numberOfCalories;
 
 
     private MealModel() {
     }
 
-    public MealModel(Long id, String text, LocalDateTime timestamp, int numberOfCalories) {
+    public MealModel(Long id, String text, LocalDateTime timestamp, long numberOfCalories) {
         this.id = id;
         this.text = text;
         this.date = timestamp.toLocalDate();
@@ -29,7 +29,7 @@ public class MealModel {
         this.numberOfCalories = numberOfCalories;
     }
 
-    public MealModel(String text, int numberOfCalories) {
+    public MealModel(String text, long numberOfCalories) {
         this(null, text, LocalDateTime.now(), numberOfCalories);
     }
 
@@ -49,7 +49,7 @@ public class MealModel {
         return time;
     }
 
-    public int getNumberOfCalories() {
+    public long getNumberOfCalories() {
         return numberOfCalories;
     }
 
@@ -65,5 +65,9 @@ public class MealModel {
     public void setTimestamp(LocalDateTime timestamp) {
         this.date = timestamp.toLocalDate();
         this.time = timestamp.toLocalTime();
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

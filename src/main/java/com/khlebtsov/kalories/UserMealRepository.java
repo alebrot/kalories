@@ -11,10 +11,13 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.TemporalType;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserMealRepository extends CrudRepository<UserMealEntity, Long> {
     List<UserMealEntity> findByUserId(Long id);
+
+    Optional<UserMealEntity> findByUserIdAndMealId(Long id, Long mealId);
 
     @Query(value = "select USER_MEALS.*  from USER_MEALS inner join MEAL on MEAL.ID = USER_MEALS.MEAL_ID  inner join USER on USER.ID =  USER_MEALS.USER_ID where (cast(USER_MEALS.UPDATED_AT as DATE) between :from and :to) and USER.ID = :user_id ", nativeQuery = true)
     List<UserMealEntity> getMeals(

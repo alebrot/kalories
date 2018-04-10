@@ -30,8 +30,10 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -209,12 +211,37 @@ public class KaloriesApplicationTests {
     private CaloriesService caloriesService;
 
 
+    @Autowired
+    private MealRepository mealRepository;
+
     @Test
     @Transactional
     public void repositoryTest() throws KaloriesException {
 
-        caloriesService.setForUser(2L, 300L);
-        Optional<Long> caloriesForUser = caloriesService.getCaloriesForUser(2L);
+        //update
+        MealModel mealModel = new MealModel(1L, "meat1", LocalDateTime.now(), 11L);
+        mealService.createOrUpdateMealForUser(1L, mealModel);
+        Optional<UserMealEntity> afterUpdate = userMealRepository.findById(1L);
+        Assert.assertTrue(Objects.equals(mealModel.getText(), afterUpdate.get().getMeal().getText()));
+        Assert.assertTrue(Objects.equals(mealModel.getNumberOfCalories(), afterUpdate.get().getMeal().getNumberOfCalories()));
+        Assert.assertTrue(Objects.equals(mealModel.getTimestamp(), afterUpdate.get().getUpdatedAt()));
+
+
+        //insert
+
+        MealModel mealModelToInsert = new MealModel("meat2", 12L);
+        MealModel afterInsertModel = mealService.createOrUpdateMealForUser(1L, mealModelToInsert);
+        Optional<UserMealEntity> afterInsert = userMealRepository.findById(afterInsertModel.getId());
+        Assert.assertTrue(Objects.equals(mealModelToInsert.getText(), afterInsert.get().getMeal().getText()));
+        Assert.assertTrue(Objects.equals(mealModelToInsert.getNumberOfCalories(), afterInsert.get().getMeal().getNumberOfCalories()));
+        Assert.assertTrue(Objects.equals(afterInsertModel.getTimestamp(), afterInsert.get().getUpdatedAt()));
+
+
+//        mealRepository.findById(1L)
+//        Optional<MealEntity> meat = mealRepository.findByTextAndNumberOfCalories("meat",10L);
+
+//        caloriesService.setForUser(2L, 300L);
+//        Optional<Long> caloriesForUser = caloriesService.getCaloriesForUser(2L);
 //        Optional<CaloriesPerUserEntity> byUserId = caloriesPerUserRepository.findByUserId(1L);
 
 //        List<MealModel> mealsByUser = mealService.getMealsByUser(1L);
