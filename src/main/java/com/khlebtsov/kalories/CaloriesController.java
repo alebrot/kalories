@@ -24,9 +24,11 @@ public class CaloriesController {
     }
 
     @RequestMapping(value = "calories/count", method = RequestMethod.GET)
-    public int meals(@RequestParam(required = false) String from,
-                     @RequestParam(required = false) String to,
-                     @RequestParam(required = false) String date) {
+    public int caloriesCount(
+            @RequestParam Long userId,
+            @RequestParam(required = false) String from,
+            @RequestParam(required = false) String to,
+            @RequestParam(required = false) String date) {
 
         LocalDate fromLocalDate = !StringUtils.isEmpty(from) ? LocalDate.parse(from, DateTimeFormatter.ISO_DATE) : null;
         LocalDate toLocalDate = !StringUtils.isEmpty(to) ? LocalDate.parse(to, DateTimeFormatter.ISO_DATE) : null;
@@ -35,15 +37,15 @@ public class CaloriesController {
 
         if (date != null) {
             LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ISO_DATE);
-            numberOfCalories = caloriesFacade.getCalories(localDate);
+            numberOfCalories = caloriesFacade.getCaloriesByUser(userId, localDate);
         } else {
             if (fromLocalDate != null && toLocalDate != null) {
                 if (toLocalDate.isBefore(fromLocalDate)) {
                     throw new IllegalArgumentException(INVALID_REQUEST_FROM_TO);
                 }
-                numberOfCalories = caloriesFacade.getCalories(fromLocalDate, toLocalDate);
+                numberOfCalories = caloriesFacade.getCaloriesByUser(userId, fromLocalDate, toLocalDate);
             } else {
-                numberOfCalories = caloriesFacade.getCalories();
+                numberOfCalories = caloriesFacade.getCaloriesByUser(userId);
             }
         }
 

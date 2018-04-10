@@ -34,9 +34,11 @@ public class MealController {
     }
 
     @RequestMapping(value = "meals", method = RequestMethod.GET)
-    public List<MealModel> meals(@RequestParam(required = false) String from,
-                                  @RequestParam(required = false) String to,
-                                  @RequestParam(required = false) String date) {
+    public List<MealModel> meals(@RequestParam Long userId,
+                                 @RequestParam(required = false) String from,
+                                 @RequestParam(required = false) String to,
+                                 @RequestParam(required = false) String date) {
+
 
         LocalDate fromLocalDate = !StringUtils.isEmpty(from) ? LocalDate.parse(from, DateTimeFormatter.ISO_DATE) : null;
         LocalDate toLocalDate = !StringUtils.isEmpty(to) ? LocalDate.parse(to, DateTimeFormatter.ISO_DATE) : null;
@@ -45,15 +47,15 @@ public class MealController {
 
         if (date != null) {
             LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ISO_DATE);
-            mealEntities = mealService.getMeals(localDate);
+            mealEntities = mealService.getMealsByUser(userId, localDate);
         } else {
             if (fromLocalDate != null && toLocalDate != null) {
                 if (toLocalDate.isBefore(fromLocalDate)) {
                     throw new IllegalArgumentException("Invalid request from < to");
                 }
-                mealEntities = mealService.getMeals(fromLocalDate, toLocalDate);
+                mealEntities = mealService.getMealsByUser(userId, fromLocalDate, toLocalDate);
             } else {
-                mealEntities = mealService.getMeals();
+                mealEntities = mealService.getMealsByUser(userId);
             }
         }
 

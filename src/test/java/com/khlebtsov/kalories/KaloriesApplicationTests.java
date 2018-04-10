@@ -51,26 +51,11 @@ public class KaloriesApplicationTests {
     }
 
     @Test
-    public void contextLoads() throws Exception {
-
-//http://localhost:8080/meals?from=2018-04-08&to=2018-04-08
-        MockHttpServletRequestBuilder builder =
-                MockMvcRequestBuilders.get(URL_GO)
-                        .contentType(MediaType.APPLICATION_JSON);
-        ResultActions resultActions = this.mockMvc.perform(builder);
-        MvcResult mvcResult = resultActions.andReturn();
-        MockHttpServletResponse response = mvcResult.getResponse();
-        String contentAsString = response.getContentAsString();
-
-        MealModel[] mealModels = JsonUtil.toObject(contentAsString, MealModel[].class);
-    }
-
-
-    @Test
     public void mealsFromAndToSet() throws Exception {
         MockHttpServletRequestBuilder builder =
                 MockMvcRequestBuilders.get(URL_MEALS)
                         .contentType(MediaType.APPLICATION_JSON);
+        builder.param("userId", "1");
         builder.param("from", "2018-04-01");
         builder.param("to", LocalDate.now().format(DateTimeFormatter.ISO_DATE));
 
@@ -88,6 +73,7 @@ public class KaloriesApplicationTests {
         MockHttpServletRequestBuilder builder =
                 MockMvcRequestBuilders.get(URL_MEALS)
                         .contentType(MediaType.APPLICATION_JSON);
+        builder.param("userId", "1");
         builder.param("from", "2018-04-01");
 
         ResultActions resultActions = this.mockMvc.perform(builder);
@@ -104,6 +90,7 @@ public class KaloriesApplicationTests {
         MockHttpServletRequestBuilder builder =
                 MockMvcRequestBuilders.get(URL_MEALS)
                         .contentType(MediaType.APPLICATION_JSON);
+        builder.param("userId", "1");
         builder.param("to", LocalDate.now().format(DateTimeFormatter.ISO_DATE));
 
         ResultActions resultActions = this.mockMvc.perform(builder);
@@ -121,6 +108,7 @@ public class KaloriesApplicationTests {
         MockHttpServletRequestBuilder builder =
                 MockMvcRequestBuilders.get(URL_MEALS)
                         .contentType(MediaType.APPLICATION_JSON);
+        builder.param("userId", "1");
 
         ResultActions resultActions = this.mockMvc.perform(builder);
         MvcResult mvcResult = resultActions.andReturn();
@@ -190,6 +178,7 @@ public class KaloriesApplicationTests {
         MockHttpServletRequestBuilder builder =
                 MockMvcRequestBuilders.get(URL_CALORIES)
                         .contentType(MediaType.APPLICATION_JSON);
+        builder.param("userId", "1");
         builder.param("date", "2018-04-08");
 
         ResultActions resultActions = this.mockMvc.perform(builder);

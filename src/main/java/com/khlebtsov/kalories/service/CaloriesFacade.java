@@ -9,23 +9,27 @@ import java.time.LocalDate;
 @Component
 public class CaloriesFacade {
 
+    private final MealService mealService;
+
     @Autowired
-    private MealService mealService;
+    public CaloriesFacade(MealService mealService) {
+        this.mealService = mealService;
+    }
 
-    public int getCalories(LocalDate from, LocalDate to) {
-        return mealService.getMeals(from, to).stream()
+    public int getCaloriesByUser(Long userId, LocalDate from, LocalDate to) {
+        return mealService.getMealsByUser(userId, from, to).stream()
                 .mapToInt(MealModel::getNumberOfCalories)
                 .sum();
     }
 
-    public int getCalories(LocalDate date) {
-        return mealService.getMeals(date).stream()
+    public int getCaloriesByUser(Long userId, LocalDate date) {
+        return mealService.getMealsByUser(userId, date).stream()
                 .mapToInt(MealModel::getNumberOfCalories)
                 .sum();
     }
 
-    public int getCalories() {
-        return mealService.getMeals().stream()
+    public int getCaloriesByUser(Long userId) {
+        return mealService.getMealsByUser(userId).stream()
                 .mapToInt(MealModel::getNumberOfCalories)
                 .sum();
     }
