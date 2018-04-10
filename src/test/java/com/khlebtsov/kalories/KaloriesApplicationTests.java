@@ -6,6 +6,8 @@ import com.khlebtsov.kalories.dto.MealDto;
 import com.khlebtsov.kalories.entity.CaloriesPerUserEntity;
 import com.khlebtsov.kalories.entity.MealEntity;
 import com.khlebtsov.kalories.entity.UserMealEntity;
+import com.khlebtsov.kalories.exception.KaloriesException;
+import com.khlebtsov.kalories.service.CaloriesService;
 import com.khlebtsov.kalories.service.MealService;
 import org.junit.Assert;
 import org.junit.Before;
@@ -203,17 +205,23 @@ public class KaloriesApplicationTests {
     @Autowired
     private CaloriesPerUserRepository caloriesPerUserRepository;
 
+    @Autowired
+    private CaloriesService caloriesService;
+
+
     @Test
     @Transactional
-    public void repositoryTest() {
+    public void repositoryTest() throws KaloriesException {
 
-        Optional<CaloriesPerUserEntity> byUserId = caloriesPerUserRepository.findByUserId(1L);
+        caloriesService.setForUser(2L, 300L);
+        Optional<Long> caloriesForUser = caloriesService.getCaloriesForUser(2L);
+//        Optional<CaloriesPerUserEntity> byUserId = caloriesPerUserRepository.findByUserId(1L);
 
 //        List<MealModel> mealsByUser = mealService.getMealsByUser(1L);
 //        Assert.assertNotNull(mealsByUser);
 //        Assert.assertTrue(!mealsByUser.isEmpty());
 
-        List<UserMealEntity> meals = userMealRepository.getMeals(1L, Date.valueOf((LocalDate.now().withDayOfMonth(1))), Date.valueOf(LocalDate.now()));
+//        List<UserMealEntity> meals = userMealRepository.getMeals(1L, Date.valueOf((LocalDate.now().withDayOfMonth(1))), Date.valueOf(LocalDate.now()));
 
 
 //        List<UserMealEntity> userMealEntities = userMealRepository.findByUserId(1L);

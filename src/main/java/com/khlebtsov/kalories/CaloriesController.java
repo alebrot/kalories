@@ -2,16 +2,16 @@ package com.khlebtsov.kalories;
 
 
 import com.khlebtsov.kalories.dto.CaloriesCountResponse;
+import com.khlebtsov.kalories.dto.SetCaloriesRequest;
 import com.khlebtsov.kalories.exception.KaloriesException;
 import com.khlebtsov.kalories.service.CaloriesFacade;
+import com.khlebtsov.kalories.service.CaloriesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
@@ -21,10 +21,12 @@ public class CaloriesController {
 
     private static final String INVALID_REQUEST_FROM_TO = "Invalid request from < to";
     private final CaloriesFacade caloriesFacade;
+    private final CaloriesService caloriesService;
 
     @Autowired
-    public CaloriesController(CaloriesFacade caloriesFacade) {
+    public CaloriesController(CaloriesFacade caloriesFacade, CaloriesService caloriesService) {
         this.caloriesFacade = caloriesFacade;
+        this.caloriesService = caloriesService;
     }
 
     @RequestMapping(value = "calories/count", method = RequestMethod.GET)
@@ -64,5 +66,11 @@ public class CaloriesController {
         return caloriesCountResponse;
     }
 
+    @RequestMapping(value = "calories", method = RequestMethod.POST)
+    public void meals(@RequestBody @Valid SetCaloriesRequest request) throws KaloriesException {
+        Long calories = request.getCalories();
+        Long userId = request.getUserId();
+        caloriesService.setForUser(userId, calories);
+    }
 
 }
