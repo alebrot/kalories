@@ -25,8 +25,12 @@ public class CaloriesServiceDefault implements CaloriesService {
     }
 
     @Override
-    public Optional<Long> getCaloriesForUser(Long userId) {
-        return caloriesPerUserRepository.findByUserId(userId).map(CaloriesPerUserEntity::getNumberOfCalories);
+    public Long getCaloriesForUser(Long userId) throws KaloriesException {
+        Optional<Long> caloriesOptional = caloriesPerUserRepository.findByUserId(userId).map(CaloriesPerUserEntity::getNumberOfCalories);
+        if (!caloriesOptional.isPresent()) {
+            throw new KaloriesException("No threshold set for user ", userId);
+        }
+        return caloriesOptional.get();
     }
 
 

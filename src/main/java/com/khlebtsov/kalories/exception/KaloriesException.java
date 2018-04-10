@@ -7,8 +7,10 @@ public class KaloriesException extends Exception {
      * Constructs a new exception with {@code null} as its detail message.
      * The cause is not initialized, and may subsequently be initialized by a
      * call to {@link #initCause}.
+     * @param no_threshold_set_for_user_
+     * @param userId
      */
-    public KaloriesException() {
+    public KaloriesException(String no_threshold_set_for_user_, Long userId) {
         super();
     }
 

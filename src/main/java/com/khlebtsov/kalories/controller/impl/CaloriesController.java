@@ -4,7 +4,7 @@ package com.khlebtsov.kalories.controller.impl;
 import com.khlebtsov.kalories.controller.dto.response.CaloriesCountResponse;
 import com.khlebtsov.kalories.controller.dto.request.SetCaloriesRequest;
 import com.khlebtsov.kalories.exception.KaloriesException;
-import com.khlebtsov.kalories.facade.CaloriesFacade;
+import com.khlebtsov.kalories.facade.impl.CaloriesFacadeDefault;
 import com.khlebtsov.kalories.service.impl.CaloriesServiceDefault;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
@@ -20,11 +20,11 @@ import java.util.Optional;
 public class CaloriesController {
 
     private static final String INVALID_REQUEST_FROM_TO = "Invalid request from < to";
-    private final CaloriesFacade caloriesFacade;
+    private final CaloriesFacadeDefault caloriesFacade;
     private final CaloriesServiceDefault caloriesService;
 
     @Autowired
-    public CaloriesController(CaloriesFacade caloriesFacade, CaloriesServiceDefault caloriesService) {
+    public CaloriesController(CaloriesFacadeDefault caloriesFacade, CaloriesServiceDefault caloriesService) {
         this.caloriesFacade = caloriesFacade;
         this.caloriesService = caloriesService;
     }
@@ -39,7 +39,7 @@ public class CaloriesController {
         LocalDate fromLocalDate = !StringUtils.isEmpty(from) ? LocalDate.parse(from, DateTimeFormatter.ISO_DATE) : null;
         LocalDate toLocalDate = !StringUtils.isEmpty(to) ? LocalDate.parse(to, DateTimeFormatter.ISO_DATE) : null;
 
-        Optional<Pair<Long, CaloriesFacade.CaloriesStatus>> calories;
+        Optional<Pair<Long, CaloriesFacadeDefault.CaloriesStatus>> calories;
         if (date != null) {
             LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ISO_DATE);
             calories = caloriesFacade.getCaloriesByUser(userId, localDate);

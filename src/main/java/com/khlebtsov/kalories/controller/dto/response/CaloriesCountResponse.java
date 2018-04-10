@@ -1,16 +1,16 @@
 package com.khlebtsov.kalories.controller.dto.response;
 
-import com.khlebtsov.kalories.facade.CaloriesFacade;
+import com.khlebtsov.kalories.facade.impl.CaloriesFacadeDefault;
 
 public class CaloriesCountResponse {
-    private CaloriesFacade.CaloriesStatus caloriesStatus;
+    private CaloriesFacadeDefault.CaloriesStatus caloriesStatus;
     private Long caloriesCount;
 
-    public void setCaloriesStatus(CaloriesFacade.CaloriesStatus calorisStatus) {
+    public void setCaloriesStatus(CaloriesFacadeDefault.CaloriesStatus calorisStatus) {
         this.caloriesStatus = calorisStatus;
     }
 
-    public CaloriesFacade.CaloriesStatus getCaloriesStatus() {
+    public CaloriesFacadeDefault.CaloriesStatus getCaloriesStatus() {
         return caloriesStatus;
     }
 

@@ -6,8 +6,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Optional;
-
 public class CaloriesServiceDefaultTest extends DefaultTestData {
 
     @Autowired
@@ -15,10 +13,10 @@ public class CaloriesServiceDefaultTest extends DefaultTestData {
 
 
     @Test
-    public void getCaloriesForUser() {
-        Optional<Long> caloriesForUser = caloriesServiceDefault.getCaloriesForUser(userEntity.getId());
-        Assert.assertTrue(caloriesForUser.isPresent());
-        Assert.assertEquals(caloriesPerUserEntity.getNumberOfCalories(), caloriesForUser.get());
+    public void getCaloriesForUser() throws KaloriesException {
+        Long caloriesForUser = caloriesServiceDefault.getCaloriesForUser(userEntity.getId());
+        Assert.assertNotNull(caloriesForUser);
+        Assert.assertEquals(caloriesPerUserEntity.getNumberOfCalories(), caloriesForUser);
     }
 
     @Test
