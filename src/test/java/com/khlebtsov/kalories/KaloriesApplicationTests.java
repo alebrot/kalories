@@ -10,7 +10,7 @@ import com.khlebtsov.kalories.db.UserMealRepository;
 import com.khlebtsov.kalories.db.entity.UserMealEntity;
 import com.khlebtsov.kalories.exception.KaloriesException;
 import com.khlebtsov.kalories.service.CaloriesService;
-import com.khlebtsov.kalories.service.MealService;
+import com.khlebtsov.kalories.service.impl.MealServiceDefault;
 import com.khlebtsov.kalories.util.JsonUtil;
 import org.junit.Assert;
 import org.junit.Before;
@@ -43,7 +43,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @SpringBootTest
 public class KaloriesApplicationTests {
 
-    public static final String URL_GO = "/go";
     public static final String URL_MEALS = "/meals";
     public static final String URL_CALORIES = "/calories/count";
 
@@ -203,7 +202,7 @@ public class KaloriesApplicationTests {
     private UserMealRepository userMealRepository;
 
     @Autowired
-    private MealService mealService;
+    private MealServiceDefault mealService;
 
     @Autowired
     private CaloriesPerUserRepository caloriesPerUserRepository;

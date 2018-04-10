@@ -2,7 +2,7 @@ package com.khlebtsov.kalories.facade;
 
 import com.khlebtsov.kalories.model.MealModel;
 import com.khlebtsov.kalories.service.CaloriesService;
-import com.khlebtsov.kalories.service.MealService;
+import com.khlebtsov.kalories.service.impl.MealServiceDefault;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Component;
@@ -14,12 +14,12 @@ import java.util.Optional;
 @Component
 public class CaloriesFacade {
 
-    private final MealService mealService;
+    private final MealServiceDefault mealService;
     private final CaloriesService caloriesService;
 
 
     @Autowired
-    public CaloriesFacade(MealService mealService, CaloriesService caloriesService) {
+    public CaloriesFacade(MealServiceDefault mealService, CaloriesService caloriesService) {
         this.mealService = mealService;
         this.caloriesService = caloriesService;
     }

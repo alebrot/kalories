@@ -5,8 +5,9 @@ import com.khlebtsov.kalories.controller.dto.request.AddMealRequest;
 import com.khlebtsov.kalories.model.MealModel;
 import com.khlebtsov.kalories.exception.KaloriesException;
 import com.khlebtsov.kalories.mapper.MealDtoModelMapper;
-import com.khlebtsov.kalories.service.MealService;
+import com.khlebtsov.kalories.service.impl.MealServiceDefault;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,11 +18,11 @@ import java.util.List;
 @RestController
 public class MealController {
 
-    private final MealService mealService;
+    private final MealServiceDefault mealService;
     private final MealDtoModelMapper mealDtoModelMapper;
 
     @Autowired
-    public MealController(MealService mealService, MealDtoModelMapper mealDtoModelMapper) {
+    public MealController(MealServiceDefault mealService, MealDtoModelMapper mealDtoModelMapper) {
         this.mealService = mealService;
         this.mealDtoModelMapper = mealDtoModelMapper;
     }
@@ -72,16 +73,10 @@ public class MealController {
         return mealService.createOrUpdateMealForUser(userId, mealToUpdate);
     }
 
-//    @Transactional
-//    @RequestMapping(value = "meals/{id}", method = RequestMethod.DELETE)
-//    public MealModel meals(@PathVariable(name = "id") long id) {
-//        Optional<MealModel> meal = mealService.getMeal(id);
-//        if (!meal.isPresent()) {
-//            throw new IllegalArgumentException("MealEntity does'n exist");
-//        }
-//        MealModel mealModel = meal.get();
-//        mealService.deleteMeal(mealModel);
-//        return mealModel;
-//    }
+    @Transactional
+    @RequestMapping(value = "meals/{id}", method = RequestMethod.DELETE)
+    public void deleteMeal(@PathVariable(name = "id") long id) throws KaloriesException {
+        mealService.deleteMealById(id);
+    }
 
 }

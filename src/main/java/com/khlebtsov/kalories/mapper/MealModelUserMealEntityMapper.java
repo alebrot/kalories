@@ -6,6 +6,8 @@ import com.khlebtsov.kalories.db.entity.UserMealEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
+
 @Component
 public class MealModelUserMealEntityMapper implements BiMapper<MealModel, UserMealEntity> {
 
