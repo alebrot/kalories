@@ -75,16 +75,16 @@ public class MealController {
         return mealService.createOrUpdateMealForUser(userId, mealToUpdate);
     }
 
-    @Transactional
-    @RequestMapping(value = "meals/{id}", method = RequestMethod.DELETE)
-    public MealModel meals(@PathVariable(name = "id") long id) {
-        Optional<MealModel> meal = mealService.getMeal(id);
-        if (!meal.isPresent()) {
-            throw new IllegalArgumentException("MealEntity does'n exist");
-        }
-        MealModel mealModel = meal.get();
-        mealService.deleteMeal(mealModel);
-        return mealModel;
-    }
+//    @Transactional
+//    @RequestMapping(value = "meals/{id}", method = RequestMethod.DELETE)
+//    public MealModel meals(@PathVariable(name = "id") long id) {
+//        Optional<MealModel> meal = mealService.getMeal(id);
+//        if (!meal.isPresent()) {
+//            throw new IllegalArgumentException("MealEntity does'n exist");
+//        }
+//        MealModel mealModel = meal.get();
+//        mealService.deleteMeal(mealModel);
+//        return mealModel;
+//    }
 
 }

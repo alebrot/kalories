@@ -2,7 +2,6 @@ package com.khlebtsov.kalories.entity;
 
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "meal")
@@ -15,10 +14,6 @@ public class MealEntity {
 
     @Column(name = "text")
     private String text;
-
-    @Deprecated
-    @Column(name = "date")
-    private LocalDateTime timestamp;
 
     @Column(name = "number_of_calories")
     private Long numberOfCalories;
@@ -45,13 +40,5 @@ public class MealEntity {
 
     public void setNumberOfCalories(Long numberOfCalories) {
         this.numberOfCalories = numberOfCalories;
-    }
-
-    public LocalDateTime getDate() {
-        return timestamp;
-    }
-    @Deprecated
-    public void setDate(LocalDateTime date) {
-        this.timestamp = date;
     }
 }

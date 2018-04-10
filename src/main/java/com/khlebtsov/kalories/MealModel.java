@@ -17,7 +17,6 @@ public class MealModel {
 
     private long numberOfCalories;
 
-
     private MealModel() {
     }
 

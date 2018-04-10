@@ -8,7 +8,7 @@ import com.khlebtsov.kalories.entity.MealEntity;
 import com.khlebtsov.kalories.entity.UserEntity;
 import com.khlebtsov.kalories.entity.UserMealEntity;
 import com.khlebtsov.kalories.exception.KaloriesException;
-import com.khlebtsov.kalories.mapper.MealModelEntityMapper;
+import com.khlebtsov.kalories.mapper.MealModelUserMealEntityMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,22 +27,14 @@ public class MealService {
     private final MealRepository mealRepository;
     private final UserRepository userRepository;
     private final UserMealRepository userMealRepository;
-    private final MealModelEntityMapper mealModelEntityMapper;
-    private final Function<UserMealEntity, MealModel> userMealEntityMealModelMapper;
+    private final MealModelUserMealEntityMapper mealModelUserMealEntityMapper;
 
     @Autowired
-    public MealService(MealRepository mealRepository, UserRepository userRepository, UserMealRepository userMealRepository, MealModelEntityMapper mealModelEntityMapper) {
+    public MealService(MealRepository mealRepository, UserRepository userRepository, UserMealRepository userMealRepository, MealModelUserMealEntityMapper mealModelUserMealEntityMapper) {
         this.mealRepository = mealRepository;
         this.userRepository = userRepository;
         this.userMealRepository = userMealRepository;
-        this.mealModelEntityMapper = mealModelEntityMapper;
-        this.userMealEntityMealModelMapper = userMealEntity -> {
-            MealEntity meal = userMealEntity.getMeal();
-            MealModel mealModel = mealModelEntityMapper.mapBackward(meal);
-            LocalDateTime updatedAt = userMealEntity.getUpdatedAt();
-            mealModel.setTimestamp(updatedAt);
-            return mealModel;
-        };
+        this.mealModelUserMealEntityMapper = mealModelUserMealEntityMapper;
     }
 
     @Transactional
@@ -60,19 +52,10 @@ public class MealService {
 
         UserMealEntity userMealEntitySaved;
         if (id == null) {  //create
-            UserMealEntity userMealEntity = new UserMealEntity();
-            if (timestamp != null) {
-                userMealEntity.setUpdatedAt(timestamp);
-            }
+
+            UserMealEntity userMealEntity = mealModelUserMealEntityMapper.map(mealModel);
             userMealEntity.setUser(userOptional.get());
-
-            MealEntity mealEntity = new MealEntity();
-            mealEntity.setNumberOfCalories(numberOfCalories);
-            mealEntity.setText(text);
-            mealEntity.setDate(timestamp);
-            MealEntity saveMealEntity = mealRepository.save(mealEntity);
-
-            userMealEntity.setMeal(saveMealEntity);
+            mealRepository.save(userMealEntity.getMeal());
             userMealEntitySaved = userMealRepository.save(userMealEntity);
 
         } else {//update
@@ -91,40 +74,31 @@ public class MealService {
             }
         }
 
-        MealEntity meal = userMealEntitySaved.getMeal();
-        MealModel mealModelAfterSaving = mealModelEntityMapper.mapBackward(meal);
-        mealModelAfterSaving.setId(userMealEntitySaved.getId());
-
-        return mealModelAfterSaving;
+        return mealModelUserMealEntityMapper.mapBackward(userMealEntitySaved);
     }
 
-    public void deleteMeal(long id) {
-        mealRepository.deleteById(id);
-    }
-
-    public void deleteMeal(MealModel mealModel) {
-        MealEntity mealEntity = mealModelEntityMapper.map(mealModel);
-        mealRepository.delete(mealEntity);
-    }
-
-
-    public Optional<MealModel> getMeal(long id) {
-        return mealRepository.findById(id).map(mealModelEntityMapper::mapBackward);
-    }
+//    public void deleteMeal(long id) {
+//        mealRepository.deleteById(id);
+//    }
+//
+//    public void deleteMeal(MealModel mealModel) {
+//        MealEntity mealEntity = mealModelUserMealEntityMapper.map(mealModel);
+//        mealRepository.delete(mealEntity);
+//    }
 
 
     @Transactional
     public List<MealModel> getMealsByUser(Long userId) {
         List<UserMealEntity> userMealEntities = userMealRepository.findByUserId(userId);
         return userMealEntities.stream()
-                .map(userMealEntityMealModelMapper)
+                .map(mealModelUserMealEntityMapper::mapBackward)
                 .collect(Collectors.toList());
     }
 
     @Transactional
     public List<MealModel> getMealsByUser(Long userId, LocalDate from, LocalDate to) {
         return userMealRepository.getMeals(userId, Date.valueOf(from), Date.valueOf(to)).stream()
-                .map(userMealEntityMealModelMapper)
+                .map(mealModelUserMealEntityMapper::mapBackward)
                 .collect(Collectors.toList());
 
     }
@@ -132,7 +106,7 @@ public class MealService {
     @Transactional
     public List<MealModel> getMealsByUser(Long userId, LocalDate date) {
         return userMealRepository.getMeals(userId, Date.valueOf(date)).stream()
-                .map(userMealEntityMealModelMapper)
+                .map(mealModelUserMealEntityMapper::mapBackward)
                 .collect(Collectors.toList());
 
     }
