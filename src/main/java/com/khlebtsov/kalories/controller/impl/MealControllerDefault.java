@@ -1,6 +1,7 @@
 package com.khlebtsov.kalories.controller.impl;
 
 
+import com.khlebtsov.kalories.controller.MealController;
 import com.khlebtsov.kalories.controller.dto.request.AddMealRequest;
 import com.khlebtsov.kalories.model.MealModel;
 import com.khlebtsov.kalories.exception.KaloriesException;
@@ -16,18 +17,19 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
-public class MealController {
+public class MealControllerDefault implements MealController {
 
     private final MealServiceDefault mealService;
     private final MealDtoModelMapper mealDtoModelMapper;
 
     @Autowired
-    public MealController(MealServiceDefault mealService, MealDtoModelMapper mealDtoModelMapper) {
+    public MealControllerDefault(MealServiceDefault mealService, MealDtoModelMapper mealDtoModelMapper) {
         this.mealService = mealService;
         this.mealDtoModelMapper = mealDtoModelMapper;
     }
 
 
+    @Override
     @RequestMapping(value = "meals", method = RequestMethod.GET)
     public List<MealModel> meals(@RequestParam Long userId,
                                  @RequestParam(required = false) String from,
@@ -58,6 +60,7 @@ public class MealController {
         return mealEntities;
     }
 
+    @Override
     @RequestMapping(value = "meals", method = RequestMethod.POST)
     public MealModel addMeals(@RequestBody AddMealRequest request) throws KaloriesException {
         MealModel mealToAdd = mealDtoModelMapper.map(request.getMeal());
@@ -65,6 +68,7 @@ public class MealController {
         return mealService.createOrUpdateMealForUser(userId, mealToAdd);
     }
 
+    @Override
     @RequestMapping(value = "meals/{id}", method = RequestMethod.PATCH)
     public MealModel updateMeal(@RequestBody AddMealRequest request, @PathVariable(name = "id") long id) throws KaloriesException {
         MealModel mealToUpdate = mealDtoModelMapper.map(request.getMeal());
@@ -73,6 +77,7 @@ public class MealController {
         return mealService.createOrUpdateMealForUser(userId, mealToUpdate);
     }
 
+    @Override
     @Transactional
     @RequestMapping(value = "meals/{id}", method = RequestMethod.DELETE)
     public void deleteMeal(@PathVariable(name = "id") long id) throws KaloriesException {

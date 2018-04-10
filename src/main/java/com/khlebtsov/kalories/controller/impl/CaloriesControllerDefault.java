@@ -1,6 +1,7 @@
 package com.khlebtsov.kalories.controller.impl;
 
 
+import com.khlebtsov.kalories.controller.CaloriesController;
 import com.khlebtsov.kalories.controller.dto.response.CaloriesCountResponse;
 import com.khlebtsov.kalories.controller.dto.request.SetCaloriesRequest;
 import com.khlebtsov.kalories.exception.KaloriesException;
@@ -17,18 +18,19 @@ import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @RestController
-public class CaloriesController {
+public class CaloriesControllerDefault implements CaloriesController {
 
     private static final String INVALID_REQUEST_FROM_TO = "Invalid request from < to";
     private final CaloriesFacadeDefault caloriesFacade;
     private final CaloriesServiceDefault caloriesService;
 
     @Autowired
-    public CaloriesController(CaloriesFacadeDefault caloriesFacade, CaloriesServiceDefault caloriesService) {
+    public CaloriesControllerDefault(CaloriesFacadeDefault caloriesFacade, CaloriesServiceDefault caloriesService) {
         this.caloriesFacade = caloriesFacade;
         this.caloriesService = caloriesService;
     }
 
+    @Override
     @RequestMapping(value = "calories/count", method = RequestMethod.GET)
     public CaloriesCountResponse caloriesCount(
             @RequestParam Long userId,
@@ -66,6 +68,7 @@ public class CaloriesController {
         return caloriesCountResponse;
     }
 
+    @Override
     @RequestMapping(value = "calories", method = RequestMethod.POST)
     public void setCaloriesForUser(@RequestBody @Valid SetCaloriesRequest request) throws KaloriesException {
         Long calories = request.getCalories();
