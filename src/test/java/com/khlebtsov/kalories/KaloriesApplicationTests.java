@@ -9,7 +9,7 @@ import com.khlebtsov.kalories.db.MealRepository;
 import com.khlebtsov.kalories.db.UserMealRepository;
 import com.khlebtsov.kalories.db.entity.UserMealEntity;
 import com.khlebtsov.kalories.exception.KaloriesException;
-import com.khlebtsov.kalories.service.CaloriesService;
+import com.khlebtsov.kalories.service.impl.CaloriesServiceDefault;
 import com.khlebtsov.kalories.service.impl.MealServiceDefault;
 import com.khlebtsov.kalories.util.JsonUtil;
 import org.junit.Assert;
@@ -208,7 +208,7 @@ public class KaloriesApplicationTests {
     private CaloriesPerUserRepository caloriesPerUserRepository;
 
     @Autowired
-    private CaloriesService caloriesService;
+    private CaloriesServiceDefault caloriesService;
 
 
     @Autowired

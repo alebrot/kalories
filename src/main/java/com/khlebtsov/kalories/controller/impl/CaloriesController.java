@@ -5,7 +5,7 @@ import com.khlebtsov.kalories.controller.dto.response.CaloriesCountResponse;
 import com.khlebtsov.kalories.controller.dto.request.SetCaloriesRequest;
 import com.khlebtsov.kalories.exception.KaloriesException;
 import com.khlebtsov.kalories.facade.CaloriesFacade;
-import com.khlebtsov.kalories.service.CaloriesService;
+import com.khlebtsov.kalories.service.impl.CaloriesServiceDefault;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
 import org.springframework.util.StringUtils;
@@ -21,10 +21,10 @@ public class CaloriesController {
 
     private static final String INVALID_REQUEST_FROM_TO = "Invalid request from < to";
     private final CaloriesFacade caloriesFacade;
-    private final CaloriesService caloriesService;
+    private final CaloriesServiceDefault caloriesService;
 
     @Autowired
-    public CaloriesController(CaloriesFacade caloriesFacade, CaloriesService caloriesService) {
+    public CaloriesController(CaloriesFacade caloriesFacade, CaloriesServiceDefault caloriesService) {
         this.caloriesFacade = caloriesFacade;
         this.caloriesService = caloriesService;
     }
