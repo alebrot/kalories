@@ -1,4 +1,4 @@
-package com.khlebtsov.kalories;
+package com.khlebtsov.kalories.model;
 
 
 import org.springframework.lang.Nullable;

@@ -1,8 +1,8 @@
 package com.khlebtsov.kalories.mapper;
 
-import com.khlebtsov.kalories.MealModel;
-import com.khlebtsov.kalories.entity.MealEntity;
-import com.khlebtsov.kalories.entity.UserMealEntity;
+import com.khlebtsov.kalories.model.MealModel;
+import com.khlebtsov.kalories.db.entity.MealEntity;
+import com.khlebtsov.kalories.db.entity.UserMealEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 

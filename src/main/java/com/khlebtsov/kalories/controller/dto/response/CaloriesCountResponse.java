@@ -1,6 +1,6 @@
-package com.khlebtsov.kalories.dto;
+package com.khlebtsov.kalories.controller.dto.response;
 
-import com.khlebtsov.kalories.service.CaloriesFacade;
+import com.khlebtsov.kalories.facade.CaloriesFacade;
 
 public class CaloriesCountResponse {
     private CaloriesFacade.CaloriesStatus caloriesStatus;

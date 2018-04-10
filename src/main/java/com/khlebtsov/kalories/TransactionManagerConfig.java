@@ -12,7 +12,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableTransactionManagement
-public class TransactionManagersConfig {
+public class TransactionManagerConfig {
 
     @Bean(name = "transactionManager")
     public PlatformTransactionManager transactionManager(@Autowired EntityManagerFactory entityManagerFactory, @Autowired DataSource dataSource) {

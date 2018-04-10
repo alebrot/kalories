@@ -1,21 +1,18 @@
-package com.khlebtsov.kalories;
+package com.khlebtsov.kalories.controller.impl;
 
 
-import com.khlebtsov.kalories.dto.AddMealRequest;
+import com.khlebtsov.kalories.controller.dto.request.AddMealRequest;
+import com.khlebtsov.kalories.model.MealModel;
 import com.khlebtsov.kalories.exception.KaloriesException;
 import com.khlebtsov.kalories.mapper.MealDtoModelMapper;
 import com.khlebtsov.kalories.service.MealService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class MealController {

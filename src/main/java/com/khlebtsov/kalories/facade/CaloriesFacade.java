@@ -1,6 +1,8 @@
-package com.khlebtsov.kalories.service;
+package com.khlebtsov.kalories.facade;
 
-import com.khlebtsov.kalories.MealModel;
+import com.khlebtsov.kalories.model.MealModel;
+import com.khlebtsov.kalories.service.CaloriesService;
+import com.khlebtsov.kalories.service.MealService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Component;

@@ -1,7 +1,6 @@
-package com.khlebtsov.kalories;
+package com.khlebtsov.kalories.db;
 
-import com.khlebtsov.kalories.entity.MealEntity;
-import com.khlebtsov.kalories.entity.UserMealEntity;
+import com.khlebtsov.kalories.db.entity.UserMealEntity;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.Temporal;
 import org.springframework.data.repository.CrudRepository;

@@ -1,11 +1,10 @@
-package com.khlebtsov.kalories.dto;
+package com.khlebtsov.kalories.controller.dto.request;
 
 public class MealDto {
 
     private String text;
 
-    private int numberOfCalories;
-
+    private long numberOfCalories;
 
     public String getText() {
         return text;
@@ -15,7 +14,7 @@ public class MealDto {
         this.text = text;
     }
 
-    public int getNumberOfCalories() {
+    public long getNumberOfCalories() {
         return numberOfCalories;
     }
 

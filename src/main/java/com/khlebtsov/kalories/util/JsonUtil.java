@@ -1,4 +1,4 @@
-package com.khlebtsov.kalories;
+package com.khlebtsov.kalories.util;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;

@@ -1,9 +1,9 @@
 package com.khlebtsov.kalories.service;
 
-import com.khlebtsov.kalories.CaloriesPerUserRepository;
-import com.khlebtsov.kalories.UserRepository;
-import com.khlebtsov.kalories.entity.CaloriesPerUserEntity;
-import com.khlebtsov.kalories.entity.UserEntity;
+import com.khlebtsov.kalories.db.CaloriesPerUserRepository;
+import com.khlebtsov.kalories.db.UserRepository;
+import com.khlebtsov.kalories.db.entity.CaloriesPerUserEntity;
+import com.khlebtsov.kalories.db.entity.UserEntity;
 import com.khlebtsov.kalories.exception.KaloriesException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

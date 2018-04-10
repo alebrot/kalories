@@ -1,12 +1,12 @@
 package com.khlebtsov.kalories.service;
 
-import com.khlebtsov.kalories.MealModel;
-import com.khlebtsov.kalories.MealRepository;
-import com.khlebtsov.kalories.UserMealRepository;
-import com.khlebtsov.kalories.UserRepository;
-import com.khlebtsov.kalories.entity.MealEntity;
-import com.khlebtsov.kalories.entity.UserEntity;
-import com.khlebtsov.kalories.entity.UserMealEntity;
+import com.khlebtsov.kalories.model.MealModel;
+import com.khlebtsov.kalories.db.MealRepository;
+import com.khlebtsov.kalories.db.UserMealRepository;
+import com.khlebtsov.kalories.db.UserRepository;
+import com.khlebtsov.kalories.db.entity.MealEntity;
+import com.khlebtsov.kalories.db.entity.UserEntity;
+import com.khlebtsov.kalories.db.entity.UserMealEntity;
 import com.khlebtsov.kalories.exception.KaloriesException;
 import com.khlebtsov.kalories.mapper.MealModelUserMealEntityMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service

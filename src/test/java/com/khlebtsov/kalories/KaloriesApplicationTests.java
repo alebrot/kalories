@@ -1,14 +1,17 @@
 package com.khlebtsov.kalories;
 
-import com.khlebtsov.kalories.dto.AddMealRequest;
-import com.khlebtsov.kalories.dto.CaloriesCountResponse;
-import com.khlebtsov.kalories.dto.MealDto;
-import com.khlebtsov.kalories.entity.CaloriesPerUserEntity;
-import com.khlebtsov.kalories.entity.MealEntity;
-import com.khlebtsov.kalories.entity.UserMealEntity;
+import com.khlebtsov.kalories.controller.dto.request.AddMealRequest;
+import com.khlebtsov.kalories.controller.dto.response.CaloriesCountResponse;
+import com.khlebtsov.kalories.controller.dto.request.MealDto;
+import com.khlebtsov.kalories.db.CaloriesPerUserRepository;
+import com.khlebtsov.kalories.model.MealModel;
+import com.khlebtsov.kalories.db.MealRepository;
+import com.khlebtsov.kalories.db.UserMealRepository;
+import com.khlebtsov.kalories.db.entity.UserMealEntity;
 import com.khlebtsov.kalories.exception.KaloriesException;
 import com.khlebtsov.kalories.service.CaloriesService;
 import com.khlebtsov.kalories.service.MealService;
+import com.khlebtsov.kalories.util.JsonUtil;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,11 +31,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 

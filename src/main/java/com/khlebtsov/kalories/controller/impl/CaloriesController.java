@@ -1,10 +1,10 @@
-package com.khlebtsov.kalories;
+package com.khlebtsov.kalories.controller.impl;
 
 
-import com.khlebtsov.kalories.dto.CaloriesCountResponse;
-import com.khlebtsov.kalories.dto.SetCaloriesRequest;
+import com.khlebtsov.kalories.controller.dto.response.CaloriesCountResponse;
+import com.khlebtsov.kalories.controller.dto.request.SetCaloriesRequest;
 import com.khlebtsov.kalories.exception.KaloriesException;
-import com.khlebtsov.kalories.service.CaloriesFacade;
+import com.khlebtsov.kalories.facade.CaloriesFacade;
 import com.khlebtsov.kalories.service.CaloriesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;

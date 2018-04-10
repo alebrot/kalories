@@ -1,6 +1,6 @@
-package com.khlebtsov.kalories;
+package com.khlebtsov.kalories.db;
 
-import com.khlebtsov.kalories.entity.MealEntity;
+import com.khlebtsov.kalories.db.entity.MealEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

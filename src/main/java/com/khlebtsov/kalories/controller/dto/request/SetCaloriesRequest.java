@@ -1,19 +1,19 @@
-package com.khlebtsov.kalories.dto;
+package com.khlebtsov.kalories.controller.dto.request;
 
 import javax.validation.constraints.NotNull;
 
-public class AddMealRequest {
+public class SetCaloriesRequest {
     @NotNull
-    private MealDto meal;
+    private Long calories;
     @NotNull
     private Long userId;
 
-    public MealDto getMeal() {
-        return meal;
+    public Long getCalories() {
+        return calories;
     }
 
-    public void setMeal(MealDto meal) {
-        this.meal = meal;
+    public void setCalories(Long calories) {
+        this.calories = calories;
     }
 
     public Long getUserId() {

@@ -1,4 +1,4 @@
-package com.khlebtsov.kalories.entity;
+package com.khlebtsov.kalories.db.entity;
 
 
 import javax.persistence.*;
