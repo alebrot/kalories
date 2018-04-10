@@ -2,6 +2,9 @@ package com.khlebtsov.kalories;
 
 import com.khlebtsov.kalories.dto.AddMealRequest;
 import com.khlebtsov.kalories.dto.MealDto;
+import com.khlebtsov.kalories.entity.MealEntity;
+import com.khlebtsov.kalories.entity.UserMealEntity;
+import com.khlebtsov.kalories.service.MealService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,11 +21,13 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.io.UnsupportedEncodingException;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 
@@ -194,5 +199,30 @@ public class KaloriesApplicationTests {
         Integer mealModels = JsonUtil.toObject(contentAsString, Integer.class);
         Assert.assertNotNull(mealModels);
 
+    }
+
+
+    @Autowired
+    private UserMealRepository userMealRepository;
+
+    @Autowired
+    private MealService mealService;
+
+    @Test
+    @Transactional
+    public void repositoryTest() {
+
+//        List<MealModel> mealsByUser = mealService.getMealsByUser(1L);
+//        Assert.assertNotNull(mealsByUser);
+//        Assert.assertTrue(!mealsByUser.isEmpty());
+
+        List<UserMealEntity> meals = userMealRepository.getMeals(1L, Date.valueOf((LocalDate.now().withDayOfMonth(1))), Date.valueOf(LocalDate.now()));
+
+
+//        List<UserMealEntity> userMealEntities = userMealRepository.findByUserId(1L);
+//        userMealEntities.forEach(userMealEntity -> {
+//            MealEntity meal = userMealEntity.getMeal();
+//            UserEntity user = userMealEntity.getUser();
+//        });
     }
 }

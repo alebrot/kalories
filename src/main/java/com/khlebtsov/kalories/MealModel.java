@@ -61,4 +61,9 @@ public class MealModel {
         }
         return localDateTime;
     }
+
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.date = timestamp.toLocalDate();
+        this.time = timestamp.toLocalTime();
+    }
 }
