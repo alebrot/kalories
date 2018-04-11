@@ -14,6 +14,7 @@ number, otherwise it is red.
 4. As a User I want to be able to edit a meal
 5. As a User I want to be able to delete a meal
 6. As a User I want to be able to filter meals by date (from-to).
+
 ## Specs ##
 
 A meal has the following fields:
@@ -31,6 +32,10 @@ Three layers:
 - controller
 - facade
 - service
+
+Model: MealModel
+
+    com.khlebtsov.kalories.model.MealModel
 
 ![layers](layers.png "Layers")
 
@@ -68,7 +73,7 @@ Test:
 Implementation:
 
     com.khlebtsov.kalories.layers.controller.impl.CaloriesControllerDefault.caloriesCount
-      // which returns coories and coresponding status WARNING_EXCEED_THRESHOLD/OK that should be used to show res or green color in GUI
+      // which returns calories and coresponding status WARNING_EXCEED_THRESHOLD/OK that should be used to show res or green color in GUI
 
 Test:
 
@@ -121,7 +126,7 @@ Test:
     
  ## PS ##
  
- All services and Facades are covered by tests
+ All services and Facades are covered by tests as well
  
  ![test](coverage.PNG "Test Coverage")
 
