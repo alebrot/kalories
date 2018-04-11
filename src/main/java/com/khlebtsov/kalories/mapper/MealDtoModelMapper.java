@@ -1,7 +1,7 @@
 package com.khlebtsov.kalories.mapper;
 
 import com.khlebtsov.kalories.model.MealModel;
-import com.khlebtsov.kalories.controller.dto.request.MealDto;
+import com.khlebtsov.kalories.layers.controller.dto.request.MealDto;
 import org.springframework.stereotype.Component;
 
 @Component

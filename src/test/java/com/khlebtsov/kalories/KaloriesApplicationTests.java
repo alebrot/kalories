@@ -1,16 +1,16 @@
 package com.khlebtsov.kalories;
 
-import com.khlebtsov.kalories.controller.dto.request.AddMealRequest;
-import com.khlebtsov.kalories.controller.dto.response.CaloriesCountResponse;
-import com.khlebtsov.kalories.controller.dto.request.MealDto;
+import com.khlebtsov.kalories.layers.controller.dto.request.AddMealRequest;
+import com.khlebtsov.kalories.layers.controller.dto.response.CaloriesCountResponse;
+import com.khlebtsov.kalories.layers.controller.dto.request.MealDto;
 import com.khlebtsov.kalories.db.CaloriesPerUserRepository;
 import com.khlebtsov.kalories.model.MealModel;
 import com.khlebtsov.kalories.db.MealRepository;
 import com.khlebtsov.kalories.db.UserMealRepository;
 import com.khlebtsov.kalories.db.entity.UserMealEntity;
 import com.khlebtsov.kalories.exception.KaloriesException;
-import com.khlebtsov.kalories.service.impl.CaloriesServiceDefault;
-import com.khlebtsov.kalories.service.impl.MealServiceDefault;
+import com.khlebtsov.kalories.layers.service.impl.CaloriesServiceDefault;
+import com.khlebtsov.kalories.layers.service.impl.MealServiceDefault;
 import com.khlebtsov.kalories.util.JsonUtil;
 import org.junit.Assert;
 import org.junit.Before;
