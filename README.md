@@ -56,7 +56,7 @@ Model: MealModel
 
 ## Implemented Stories ##
 
-1. As an Admin I want to set the expected number of calories per day in a settings' panel.
+**1. As an Admin I want to set the expected number of calories per day in a settings' panel.**
 
 Implementation:
 
