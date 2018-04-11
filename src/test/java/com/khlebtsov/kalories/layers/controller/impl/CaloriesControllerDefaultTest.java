@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.time.format.DateTimeFormatter;
@@ -26,8 +27,8 @@ import java.util.Optional;
 
 public class CaloriesControllerDefaultTest extends DefaultTestData {
 
-    public static final String URL_CALORIES_COUNT = "/calories/count";
-    public static final String URL_SET_CALORIES_FOR_USER = "/calories";
+    private static final String URL_CALORIES_COUNT = "/calories/count";
+    private static final String URL_SET_CALORIES_FOR_USER = "/calories";
     @Autowired
     protected WebApplicationContext webApplicationContext;
 
@@ -40,6 +41,7 @@ public class CaloriesControllerDefaultTest extends DefaultTestData {
         mockMvc = builder.build();
     }
 
+    @Transactional
     @Test
     public void caloriesCount() throws Exception {
         MockHttpServletRequestBuilder builder =
@@ -57,6 +59,7 @@ public class CaloriesControllerDefaultTest extends DefaultTestData {
         Assert.assertEquals((long) mealEntity1.getNumberOfCalories(), (long) caloriesCountResponse.getCaloriesCount());
     }
 
+    @Transactional
     @Test
     public void setCaloriesForUser() throws Exception {
 

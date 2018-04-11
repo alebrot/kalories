@@ -38,6 +38,8 @@ public class DefaultTestData {
     protected UserEntity userEntity;
     protected UserMealEntity userMealEntity1;
     protected CaloriesPerUserEntity caloriesPerUserEntity;
+    protected UserMealEntity userMealEntity2;
+    protected UserMealEntity userMealEntity3;
 
 
     @Before
@@ -76,13 +78,13 @@ public class DefaultTestData {
         userMealEntity1.setUser(userEntity);
         userMealRepository.save(userMealEntity1);
 
-        UserMealEntity userMealEntity2 = new UserMealEntity();
+        userMealEntity2 = new UserMealEntity();
         userMealEntity2.setUpdatedAt(LocalDateTime.now().minusDays(1));
         userMealEntity2.setMeal(mealEntity2);
         userMealEntity2.setUser(userEntity);
         userMealRepository.save(userMealEntity2);
 
-        UserMealEntity userMealEntity3 = new UserMealEntity();
+        userMealEntity3 = new UserMealEntity();
         userMealEntity3.setUpdatedAt(LocalDateTime.now());
         userMealEntity3.setMeal(mealEntity3);
         userMealEntity3.setUser(userEntity);

@@ -37,7 +37,7 @@ public class MealServiceDefaultTest extends DefaultTestData {
         MealModel mealModelCreated = mealServiceDefault.createOrUpdateMealForUser(userEntity.getId(), mealModelToCreate);
         Assert.assertEquals(mealModelToCreate.getText(), mealModelCreated.getText());
     }
-
+    @Transactional
     @Test
     public void deleteMealById() throws KaloriesException {
         mealServiceDefault.deleteMealById(userMealEntity1.getId());
