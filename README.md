@@ -45,6 +45,15 @@ Model: MealModel
 ![ERD](ERDigram.png "Entity Relationship Diagram")
 
 
+##  REST endpoints ## 
+
+    com.khlebtsov.kalories.layers.controller.impl.CaloriesControllerDefault
+![layers](calories_ep.PNG "Calories Controller Endpoint")
+
+    com.khlebtsov.kalories.layers.controller.impl.MealControllerDefault
+![layers](meals_ep.PNG "Meals Controller Endpoints")
+
+
 ## Implemented Stories ##
 
 1. As an Admin I want to set the expected number of calories per day in a settings' panel.
@@ -125,6 +134,24 @@ Test:
     
     
  ## PS ##
+ 
+* H2 database will be created on project run
+
+* Db files: resources/schema.sql, resources/data.sql
+
+* to run project 
+
+        com.khlebtsov.kalories.KaloriesApplication.main
+            
+* to run test
+    
+        com.khlebtsov.kalories.layers.controller.impl.CaloriesControllerDefaultTest
+        com.khlebtsov.kalories.layers.controller.impl.MealControllerDefaultTest
+        
+        com.khlebtsov.kalories.layers.facade.impl.CaloriesFacadeDefaultTest
+        
+        com.khlebtsov.kalories.layers.service.impl.CaloriesServiceDefaultTest
+        com.khlebtsov.kalories.layers.service.impl.MealServiceDefaultTest
  
  All services and Facades are covered by tests as well
  
