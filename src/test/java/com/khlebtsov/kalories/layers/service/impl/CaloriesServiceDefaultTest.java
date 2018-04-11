@@ -24,7 +24,7 @@ public class CaloriesServiceDefaultTest extends DefaultTestData {
     public void setForUser() throws KaloriesException {
         caloriesServiceDefault.setForUser(userEntity.getId(), 1000L);
         CaloriesPerUserEntity caloriesPerUserEntity = caloriesPerUserRepository.findByUserId(userEntity.getId()).get();
-        Assert.assertEquals((long) caloriesPerUserEntity.getNumberOfCalories(), 1000L);
+        Assert.assertEquals(1000L, (long) caloriesPerUserEntity.getNumberOfCalories());
 
     }
 }

@@ -152,6 +152,10 @@ Test:
         
         com.khlebtsov.kalories.layers.service.impl.CaloriesServiceDefaultTest
         com.khlebtsov.kalories.layers.service.impl.MealServiceDefaultTest
+        
+* test data is set in
+
+        com.khlebtsov.kalories.layers.service.impl.DefaultTestData       
  
  All services and Facades are covered by tests as well
  

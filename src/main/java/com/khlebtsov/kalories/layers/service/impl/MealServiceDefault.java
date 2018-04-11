@@ -63,9 +63,8 @@ public class MealServiceDefault implements MealService {
             Optional<UserMealEntity> foundUserMealEntity = userMealRepository.findById(id);
             if (foundUserMealEntity.isPresent()) {
                 UserMealEntity userMealEntity = foundUserMealEntity.get();
-                if (timestamp != null) {
-                    userMealEntity.setUpdatedAt(timestamp);
-                }
+                userMealEntity.setUpdatedAt(timestamp);
+
                 MealEntity foundMeal = userMealEntity.getMeal();
                 foundMeal.setText(text);
                 foundMeal.setNumberOfCalories(numberOfCalories);

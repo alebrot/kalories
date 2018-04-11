@@ -1,12 +1,10 @@
 package com.khlebtsov.kalories.mapper;
 
-import com.khlebtsov.kalories.model.MealModel;
 import com.khlebtsov.kalories.db.entity.MealEntity;
 import com.khlebtsov.kalories.db.entity.UserMealEntity;
+import com.khlebtsov.kalories.model.MealModel;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
-
-import java.sql.Timestamp;
 
 @Component
 public class MealModelUserMealEntityMapper implements BiMapper<MealModel, UserMealEntity> {
@@ -21,10 +19,8 @@ public class MealModelUserMealEntityMapper implements BiMapper<MealModel, UserMe
         mealEntity.setNumberOfCalories(mealModel.getNumberOfCalories());
         mealEntity.setText(mealModel.getText());
         userMealEntity.setMeal(mealEntity);
+        userMealEntity.setUpdatedAt(mealModel.getTimestamp());
 
-        if (mealModel.getTimestamp() != null) {
-            userMealEntity.setUpdatedAt(mealModel.getTimestamp());
-        }
         return userMealEntity;
     }
 
